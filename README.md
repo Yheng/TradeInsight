@@ -399,7 +399,6 @@ This project is licensed under the **GPL-3.0 License** - see the [LICENSE](LICEN
 
 ### **🎨 Created with ❤️ by Ariel Retes**
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit%20My%20Site-FF6B6B?style=for-the-badge&logo=web&logoColor=white)](https://coff.ee/arielretes)
 [![Email](https://img.shields.io/badge/Email-yhengdesigns@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yhengdesigns@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow%20Me-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Yheng)
 
