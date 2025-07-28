@@ -163,6 +163,47 @@ MT5_PASSWORD=your_mt5_investor_password
 MT5_SERVER=your_broker_server
 ```
 
+### 🎯 **Getting Started After Setup**
+
+Once all services are running, follow these steps:
+
+#### 1. **Create Your Account**
+```
+📧 Visit: http://localhost:5173
+🔐 Click "Register" to create a new trader account
+📝 Fill in: Email, Password, Trading Experience Level
+✅ Complete the onboarding tutorial
+```
+
+#### 2. **Admin Access** (for testing/demo purposes)
+```
+🛡️ Admin Panel: http://localhost:5173/admin
+👑 Default Admin Credentials:
+   📧 Email: admin@tradeinsight.local  
+   🔑 Password: admin123
+⚠️  Change these credentials immediately after first login!
+```
+
+#### 3. **Connect Your MT5 Account**
+```
+⚙️  Navigate to Settings → MT5 Integration
+🔐 Enter your MT5 credentials:
+   • Account ID (from your broker)  
+   • Investor Password (read-only password)
+   • Server (broker's server name)
+🔄 Test the connection
+📊 Start fetching your trade data
+```
+
+#### 4. **Explore Key Features**
+```
+📈 Dashboard: View your trading performance analytics
+🤖 AI Analysis: Get personalized strategy recommendations  
+🔔 Alerts: Set up risk warnings and notifications
+👥 Social: Share performance and view community insights
+📊 Charts: Interactive visualizations of your trading data
+```
+
 ---
 
 ## 🏗️ **Project Architecture**
