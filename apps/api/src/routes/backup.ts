@@ -90,7 +90,7 @@ router.post('/:backupName/verify', [
   } catch (error) {
     res.status(400).json({
       success: false,
-      error: `Backup verification failed: ${error.message}`,
+      error: `Backup verification failed: ${(error as Error).message}`,
       data: {
         backupName,
         isValid: false
@@ -139,7 +139,7 @@ router.post('/:backupName/restore', [
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: `Backup restoration failed: ${error.message}`
+      error: `Backup restoration failed: ${(error as Error).message}`
     });
   }
 }));
@@ -225,7 +225,7 @@ router.delete('/:backupName', [
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: `Failed to delete backup: ${error.message}`
+      error: `Failed to delete backup: ${(error as Error).message}`
     });
   }
 }));

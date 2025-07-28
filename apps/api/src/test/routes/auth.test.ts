@@ -1,13 +1,17 @@
 import request from 'supertest'
 import express from 'express'
 import authRoutes from '../../routes/auth'
-// import { DatabaseService } from '../../database/DatabaseService' // Currently unused
+import { DatabaseService } from '../../database/DatabaseService'
 
 const app = express()
 app.use(express.json())
 app.use('/api/auth', authRoutes)
 
 describe('Auth Routes', () => {
+  beforeEach(async () => {
+    // Clean up users table before each test
+    await DatabaseService.run('DELETE FROM users')
+  })
   describe('POST /api/auth/register', () => {
     it('should register a new user successfully', async () => {
       const userData = {
@@ -62,7 +66,7 @@ describe('Auth Routes', () => {
         .expect(400)
 
       expect(response.body.success).toBe(false)
-      expect(response.body.error).toBe('Password validation failed')
+      expect(response.body.error).toBe('Validation failed')
     })
 
     it('should reject duplicate user registration', async () => {

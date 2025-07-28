@@ -83,7 +83,7 @@ export class BrokerController {
 
       res.json({
         success: true,
-        data: users.map(user => ({
+        data: users.map((user: any) => ({
           user_id: user.user_id,
           win_rate: parseFloat(String(user.win_rate || 0)),
           drawdown: parseFloat(String(user.drawdown || 0)),

@@ -107,7 +107,7 @@ export const monitoringMiddleware = (req: Request, res: Response, next: NextFunc
 
   // Override res.end to capture metrics
   const originalEnd = res.end;
-  res.end = function(chunk?: any, encoding?: any, cb?: any) {
+  res.end = function(chunk?: any, encoding?: any, cb?: any): any {
     const endTime = Date.now();
     const diff = process.hrtime(startHrTime);
     const responseTime = diff[0] * 1000 + diff[1] * 1e-6; // Convert to milliseconds

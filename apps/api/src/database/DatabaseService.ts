@@ -299,7 +299,8 @@ export class DatabaseService {
   static async verifyDatabase(dbPath?: string): Promise<boolean> {
     try {
       const sqlite3 = require('sqlite3').verbose();
-      const testDb = new sqlite3.Database(dbPath || this.dbPath, sqlite3.OPEN_READONLY);
+      const defaultDbPath = path.join(__dirname, '..', '..', '..', '..', 'data', 'tradeinsight.db');
+      const testDb = new sqlite3.Database(dbPath || defaultDbPath, sqlite3.OPEN_READONLY);
       
       return new Promise((resolve) => {
         testDb.get("PRAGMA integrity_check", (err: any, row: any) => {
@@ -318,7 +319,7 @@ export class DatabaseService {
         });
       });
     } catch (error) {
-      logger.error('Database verification error:', error.message);
+      logger.error('Database verification error:', (error as Error).message);
       return false;
     }
   }
