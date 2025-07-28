@@ -62,3 +62,6 @@ docs/
 prd.markdown
 TradeInsight_Summary.markdown
 ui-ux-spec.markdown
+
+# Claude
+.claude/
