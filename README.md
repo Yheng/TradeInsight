@@ -1,376 +1,469 @@
-# TradeInsight 🚀
+# 📈 TradeInsight
+### *Your AI-Driven Trading Analytics Companion*
 
-**Advanced AI-Powered Trading Analytics Platform with MetaTrader 5 Integration**
+<div align="center">
 
-TradeInsight is a comprehensive trading analytics platform that combines cutting-edge artificial intelligence with real-time market data to provide traders with powerful insights, risk management tools, and performance analytics. Built with modern web technologies and featuring seamless MetaTrader 5 integration.
+![TradeInsight Banner](https://img.shields.io/badge/TradeInsight-AI%20Trading%20Analytics%20Platform-2196F3?style=for-the-badge&logo=chart-line&logoColor=white)
+
+[![React](https://img.shields.io/badge/React-18.0+-61DAFB?style=flat-square&logo=react&logoColor=black)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18.0+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org/)
+[![MetaTrader5](https://img.shields.io/badge/MetaTrader5-Integration-26A69A?style=flat-square&logo=trading&logoColor=white)](https://www.metatrader5.com/)
+[![AI Powered](https://img.shields.io/badge/AI-Transformers.js%20%2B%20OpenAI-FF6B6B?style=flat-square&logo=openai&logoColor=white)](https://openai.com/)
+
+![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=TradeInsight.Platform&left_color=2196F3&right_color=4CAF50&left_text=Visitors)
+
+*Empowering retail traders with AI-driven analytics, real-time risk management, and MT5 integration to address the 70% trader loss rate in volatile markets.*
+
+</div>
 
 ---
 
-## 🌟 Key Features
+## 🌟 **Overview**
 
-### 🤖 **AI-Driven Analytics**
-- **🔮 Price Prediction**: Multi-model ensemble predictions with LSTM, XGBoost, LightGBM, and Random Forest
-- **📊 Pattern Recognition**: Automated detection of chart patterns, candlestick formations, and support/resistance levels
-- **📰 Sentiment Analysis**: Real-time analysis of news and social media sentiment using FinBERT and VADER
-- **🎯 Feature Engineering**: 100+ technical, statistical, and market microstructure features
+**TradeInsight** is a web application that integrates with **MetaTrader 5 (MT5)** to fetch historical trade data, logs it locally in **SQLite**, and uses **AI** (Transformers.js or user-provided OpenAI API) to analyze trading activity, habits, and risks, providing personalized strategy suggestions based on the trader's profile. Designed to address the 2024–2025 fintech challenge of retail trader losses (70% lose money due to poor risk management, per Bloomberg, 2024).
 
-### 📈 **Advanced Trading Features**
-- **⚡ Real-time Market Data**: Live price feeds with sub-second latency
-- **🔗 MT5 Integration**: Direct connection to MetaTrader 5 platform
-- **📊 Portfolio Management**: Comprehensive trade tracking and performance metrics
-- **📱 Mobile-First Design**: Progressive Web App with offline capabilities
+### 🎯 **Why TradeInsight?**
 
-### ⚠️ **Risk Management**
-- **🎲 Monte Carlo Simulations**: Advanced risk modeling and scenario analysis
-- **📈 Value at Risk (VaR)**: Historical, parametric, and Monte Carlo VaR calculations
-- **⚖️ Risk Ratios**: Sharpe, Sortino, Calmar, and Information ratios
-- **🔔 Real-time Alerts**: SSE-powered risk warnings and drawdown violations
+- **🤖 AI-Driven Analysis**: Personalized strategy recommendations with explainability
+- **📊 MT5 Integration**: Direct data fetching from MetaTrader 5 accounts
+- **⚠️ Real-time Alerts**: Risk warnings, drawdown violations, and volatility alerts
+- **👥 Social Trading**: Anonymous performance sharing and community insights  
+- **🔒 Local Privacy**: SQLite storage with encrypted MT5 credentials
+- **📱 Mobile-Optimized**: Responsive design with dark theme
+- **🎓 Easy Setup**: Optional Docker deployment for portfolio showcasing
 
-### 👥 **Social Trading**
-- **🏆 Community Leaderboards**: Anonymous performance sharing and rankings
-- **💬 Market Insights**: Community-driven sentiment and strategy discussions
-- **📊 Performance Analytics**: Risk-adjusted return comparisons
-- **🔒 Privacy-First**: Complete data anonymization and opt-out controls
+---
 
-### 🛡️ **Security & Compliance**
-- **🔐 JWT Authentication**: Secure user management with role-based access
-- **♿ WCAG 2.1 AA Compliance**: Full accessibility with ARIA labels and keyboard navigation
-- **🌍 Internationalization**: English/Spanish localization with react-i18next
-- **🏢 Enterprise Security**: End-to-end encryption and audit logging
+## ✨ **Key Features**
 
-## 🏗️ Architecture
+### 🏠 **For Traders**
+- 📊 **MT5 Data Integration** - Fetch historical trades and price data from your MT5 account
+- 🤖 **AI Strategy Recommendations** - Personalized suggestions with clear explanations
+- 📈 **Interactive Visualizations** - Chart.js charts with profit/loss, drawdown, and risk metrics
+- 🔔 **Real-time Risk Alerts** - In-app and email notifications for dangerous trades
+- 👤 **Profile Management** - Update email, password, API key, and MT5 credentials
+- 📱 **Mobile-Responsive** - Dark-themed UI optimized for all devices
 
-TradeInsight is built as a modern, scalable microservices architecture:
+### 👑 **For Admins/Brokers**
+- 🔧 **User Management** - Monitor all traders, trades, and API keys
+- 📋 **Risk Settings Control** - Adjust maximum leverage and drawdown limits
+- ⚙️ **System Analytics** - Platform-wide performance and usage metrics
+- 📊 **Audit Logging** - Track all user actions and rule changes
 
-### **Technology Stack**
-- **Frontend**: React 18 + TypeScript + Tailwind CSS + Vite
-- **Backend**: Node.js + Express + TypeScript + SQLite
-- **ML Analytics**: Python + Flask + TensorFlow + scikit-learn
-- **MT5 Service**: Python + MetaTrader5 library
-- **Real-time**: Server-Sent Events (SSE) + WebSocket fallback
-- **Deployment**: Docker + Docker Compose ready
+### 👥 **For Social Trading**
+- 🏆 **Anonymous Sharing** - Share performance metrics while maintaining privacy
+- 💬 **Community Insights** - View aggregated trading statistics and trends
+- 🎯 **Feedback System** - Rate and comment on platform features
+- 🏅 **Achievement Badges** - Earn recognition for consistent sharing
 
-### **Project Structure**
+---
+
+## 🚀 **Technology Stack**
+
+<div align="center">
+
+### **Frontend Arsenal**
+![React](https://img.shields.io/badge/React-18.0+-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-4.4.5-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-10.16.4-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-4.4.0-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)
+
+### **Backend Powerhouse**
+![Node.js](https://img.shields.io/badge/Node.js-18.0+-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-4.18.2-000000?style=for-the-badge&logo=express&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-3.43.0-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-9.0.2-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![bcrypt](https://img.shields.io/badge/bcrypt-5.1.1-FF6B6B?style=for-the-badge&logo=npm&logoColor=white)
+
+### **AI & MT5 Integration**
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-2.3.2-000000?style=for-the-badge&logo=flask&logoColor=white)
+![MetaTrader5](https://img.shields.io/badge/MetaTrader5_Library-Integration-26A69A?style=for-the-badge&logo=trading&logoColor=white)
+![Transformers.js](https://img.shields.io/badge/Transformers.js-AI_Models-F16061?style=for-the-badge&logo=huggingface&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-gpt--4o--mini-412991?style=for-the-badge&logo=openai&logoColor=white)
+
+</div>
+
+---
+
+## ⚡ **Quick Start Guide**
+
+### 🔧 **Prerequisites**
+- **MetaTrader 5 terminal** installed locally and connected to a broker account (demo or live)
+- **Node.js 18.0+** and npm package manager
+- **Python 3.9+** with pip
+- **Git** (for cloning)
+
+### 🐳 **Option 1: Docker (Recommended)**
+
+```bash
+# 🚀 One-command setup
+git clone https://github.com/Yheng/TradeInsight.git
+cd TradeInsight
+docker-compose up --build
+
+# 🌐 Access your application
+# Frontend: http://localhost:5173
+# Backend API: http://localhost:3000
+# Python MT5 Service: http://localhost:5000
+```
+
+### 💻 **Option 2: Local Development**
+
+```bash
+# 📥 Clone the repository
+git clone https://github.com/Yheng/TradeInsight.git
+cd TradeInsight
+
+# 📦 Install Frontend Dependencies
+cd frontend
+npm install react react-dom axios framer-motion react-chartjs-2 chart.js tailwindcss postcss autoprefixer
+
+# 🖥️ Install Backend Dependencies
+cd ../backend
+npm install express sqlite3 cors dotenv bcrypt jsonwebtoken axios @xenova/transformers
+
+# 🐍 Install Python Dependencies
+cd ../python-service
+pip install -r requirements.txt
+
+# 🔑 Configure Environment Variables
+cd ../backend
+cp .env.example .env
+# Edit .env with your MT5 credentials (see configuration section)
+
+# 🚀 Start All Services
+# Terminal 1: Python MT5 Service
+cd python-service && python mt5_service.py
+
+# Terminal 2: Backend API
+cd backend && node server.js
+
+# Terminal 3: Frontend
+cd frontend && npm run dev
+
+# 🌐 Access URLs
+# Frontend: http://localhost:5173
+# Backend API: http://localhost:3000
+# Python Service: http://localhost:5000
+```
+
+### 🔑 **Environment Configuration**
+
+Create `backend/.env` file (add to `.gitignore`):
+```env
+SQLITE_PATH=./data/db.sqlite
+OPENAI_API_KEY=your_openai_key_here
+JWT_SECRET=your_jwt_secret_here
+MT5_SERVICE_URL=http://localhost:5000
+MT5_ACCOUNT=your_mt5_account_id
+MT5_PASSWORD=your_mt5_investor_password
+MT5_SERVER=your_broker_server
+```
+
+---
+
+## 🏗️ **Project Architecture**
+
+<details>
+<summary><b>📁 Project Structure (Click to expand)</b></summary>
+
 ```
 TradeInsight/
-├── packages/              # Shared modules
-│   ├── types/            # TypeScript type definitions
-│   └── utils/            # Shared utilities and helpers
-├── apps/                 # Applications
-│   ├── api/              # Backend API server
-│   └── web/              # React frontend application
-├── services/             # Microservices
-│   ├── mt5-service/      # MetaTrader 5 integration service
-│   └── ml-analytics/     # Machine Learning analytics service
-├── data/                 # Database files and migrations
-├── docs/                 # Comprehensive documentation
-│   ├── api/              # API documentation
-│   ├── user-guide/       # User guide and tutorials
-│   └── ml-analytics/     # ML model documentation
-└── scripts/              # Development and deployment scripts
+├── 📋 README.md
+├── 📚 docs/                        # Documentation
+│   ├── 📖 TradeInsight_Summary.markdown
+│   ├── 📋 prd.markdown            # Product Requirements Document
+│   ├── 🔌 api/                    # API documentation
+│   ├── 📖 user-guide/            # User guides
+│   └── 🤖 ml-analytics/          # ML documentation
+├── 🎨 frontend/                    # React SPA
+│   ├── 📦 package.json
+│   ├── ⚡ vite.config.js
+│   ├── 🎨 tailwind.config.js
+│   ├── 🔧 Dockerfile             # Optional Docker
+│   └── 📁 src/
+│       ├── 🚀 main.jsx           # App entry point
+│       ├── 🏠 App.jsx            # Main component
+│       ├── 🎨 index.css          # Global styles
+│       ├── 🧩 components/        # React components
+│       ├── 📄 pages/             # Page components
+│       └── 🛠️ utils/             # Frontend utilities
+├── 🖥️ backend/                     # Express API Server
+│   ├── 📦 package.json
+│   ├── 🚀 server.js              # Main server
+│   ├── 🔑 .env.example           # Environment template
+│   ├── 🔧 Dockerfile             # Optional Docker
+│   └── 📁 src/
+│       ├── 🗄️ models/            # Database models
+│       ├── 🛣️ routes/            # API endpoints
+│       ├── 🛡️ middleware/        # Express middleware
+│       └── 🛠️ utils/             # Backend utilities
+├── 🐍 python-service/             # MT5 Integration Service
+│   ├── 🐍 mt5_service.py         # Flask MT5 service
+│   ├── 📦 requirements.txt
+│   └── 🔧 Dockerfile             # Optional Docker
+├── 🔧 docker-compose.yml          # Optional Docker setup
+└── 💾 data/                       # SQLite database files
 ```
 
-## 🚀 Quick Start
+</details>
 
-### Prerequisites
+---
 
-- **Node.js 18+** and **npm 9+**
-- **Python 3.8+** with pip
-- **MetaTrader 5 terminal** (optional, for live trading)
+## 🔌 **API Documentation**
 
-### Easy Installation
-
-#### Option 1: Automated Setup (Recommended)
-```bash
-# The smart way - checks prerequisites and handles setup
-npm run start
+### 🔐 **Authentication**
+All protected endpoints require JWT token:
+```http
+Authorization: Bearer <your-jwt-token>
 ```
 
-This interactive script will:
-- ✅ Check all prerequisites
-- 📦 Install dependencies automatically
-- ⚙️ Set up environment configuration
-- 🐍 Install Python requirements
-- 🚀 Start all services with health monitoring
+<details>
+<summary><b>👤 Authentication & User Management</b></summary>
 
-#### Option 2: Manual Setup
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/register` | 📝 Register new trader account |
+| `POST` | `/api/auth/login` | 🔐 Secure JWT authentication |
+| `GET` | `/api/users/profile` | 👤 Get user profile and preferences |
+| `PUT` | `/api/users/profile` | ✏️ Update trading preferences |
+| `PUT` | `/api/users/password` | 🔑 Change account password |
+| `GET` | `/api/users/onboarding` | 🎓 Get onboarding progress |
+
+</details>
+
+<details>
+<summary><b>📊 Trading & Portfolio</b></summary>
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/trades` | 📋 Get trade history with filtering |
+| `POST` | `/api/trades` | ➕ Create new trade with validation |
+| `PUT` | `/api/trades/:id/close` | 🔍 Close trade with P&L |
+| `GET` | `/api/portfolio/summary` | ✏️ Portfolio performance metrics |
+| `GET` | `/api/portfolio/risk` | 🗑️ Real-time risk assessment |
+
+</details>
+
+<details>
+<summary><b>🤖 AI & Machine Learning</b></summary>
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/ml/predict/price` | 🔮 AI price predictions |
+| `POST` | `/api/ml/analyze/patterns` | 📊 Chart pattern recognition |
+| `POST` | `/api/ml/analyze/sentiment` | 📰 News sentiment analysis |
+| `POST` | `/api/ml/calculate/risk` | 🎲 Advanced VaR calculations |
+| `POST` | `/api/ml/models/retrain` | 🔄 Retrain ML models |
+| `GET` | `/api/ml/models/status` | 📈 Model health monitoring |
+
+</details>
+
+<details>
+<summary><b>🔔 Alerts & Social Trading</b></summary>
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/alerts` | 🔔 Get user alerts |
+| `POST` | `/api/alerts` | ➕ Create custom alerts |
+| `GET` | `/api/alerts/stream` | 📡 Real-time SSE alerts |
+| `GET` | `/api/social/leaderboard` | 🏆 Community rankings |
+| `GET` | `/api/social/insights` | 💬 Market sentiment |
+
+</details>
+
+---
+
+## 🛡️ **Security Features**
+
+<div align="center">
+
+| 🔒 **Feature** | 📋 **Implementation** |
+|----------------|----------------------|
+| **Authentication** | JWT with configurable expiration |
+| **Encryption** | AES-256-GCM for sensitive data |
+| **Password Security** | bcrypt with 12 salt rounds |
+| **API Protection** | Rate limiting (100 req/15min) |
+| **Input Validation** | Comprehensive sanitization |
+| **SQL Injection** | Parameterized queries only |
+| **CORS Protection** | Restricted domain access |
+| **Security Headers** | Helmet.js integration |
+
+</div>
+
+---
+
+## 🚀 **Advanced Features**
+
+### 🤖 **AI & Machine Learning**
+- **Price Predictions**: Multi-model ensemble with LSTM, XGBoost, LightGBM
+- **Pattern Recognition**: Automated chart pattern detection
+- **Sentiment Analysis**: FinBERT and VADER sentiment processing
+- **Risk Modeling**: Monte Carlo simulations and VaR calculations
+- **Feature Engineering**: 100+ technical and statistical features
+
+### 🔔 **Real-time System**
+- **Sub-second Updates**: Live market data streaming
+- **Server-Sent Events**: Real-time alerts and notifications
+- **WebSocket Fallback**: Guaranteed connectivity
+- **Smart Alerts**: Context-aware risk notifications
+- **Emergency Escalation**: Critical alert distribution
+
+### 👥 **Social Trading**
+- **Anonymous Sharing**: Privacy-first performance comparison
+- **Community Insights**: Aggregate market sentiment
+- **Leaderboards**: Multi-metric performance rankings
+- **Strategy Discussions**: Knowledge sharing platform
+
+### 📊 **Analytics & Visualization**
+- **Interactive Charts**: Chart.js with custom indicators
+- **Performance Metrics**: Comprehensive risk-adjusted ratios
+- **Export Functionality**: PNG/PDF report generation
+- **Mobile Optimization**: Responsive design across devices
+
+---
+
+## 🌐 **Deployment Options**
+
+### 🐳 **Docker Production**
 ```bash
-# 1. Install dependencies
-npm install
+# 🚀 Production deployment
+docker-compose -f docker-compose.prod.yml up -d
 
-# 2. Set up environment
-npm run setup:env
-# Edit .env with your configuration
-
-# 3. Install Python dependencies
-pip install -r services/mt5-service/requirements.txt
-
-# 4. Start all services
-npm run dev
-```
-
-### Service URLs
-- **Frontend**: http://localhost:5173
-- **API Server**: http://localhost:3000
-- **MT5 Service**: http://localhost:5001
-- **Health Check**: http://localhost:3000/health
-
-### Health Monitoring
-```bash
-# Full health check with detailed diagnostics
-npm run health
-
-# Quick health check
-npm run health:quick
-```
-
-### Configuration
-
-Edit the `.env` file with your settings:
-
-- **JWT_SECRET**: Secret key for authentication
-- **MT5_LOGIN/PASSWORD/SERVER**: Your MetaTrader 5 credentials
-- **Database and service URLs**
-
-## 🔌 API Endpoints
-
-### **Authentication & User Management**
-- `POST /api/auth/register` - User registration with profile setup
-- `POST /api/auth/login` - Secure JWT authentication
-- `PUT /api/users/profile` - Update user preferences and risk settings
-- `GET /api/users/onboarding` - Get onboarding progress
-
-### **Trading & Portfolio**
-- `GET /api/trades` - Get user trades with advanced filtering
-- `POST /api/trades` - Create new trade with risk validation
-- `PUT /api/trades/:id/close` - Close trade with P&L calculation
-- `GET /api/portfolio/summary` - Portfolio performance metrics
-- `GET /api/portfolio/risk` - Real-time risk assessment
-
-### **Market Data & MT5 Integration**
-- `GET /api/market/symbols/:symbol` - Real-time symbol data
-- `GET /api/market/symbols/:symbol/history` - Historical OHLCV data
-- `POST /api/mt5/connect` - Connect to MetaTrader 5 account
-- `GET /api/mt5/positions` - Live positions from MT5
-- `GET /api/mt5/account` - MT5 account information
-
-### **AI & Machine Learning Analytics**
-- `POST /api/ml/predict/price` - AI price predictions with confidence intervals
-- `POST /api/ml/analyze/patterns` - Chart pattern recognition
-- `POST /api/ml/analyze/sentiment` - News and social media sentiment
-- `POST /api/ml/calculate/risk` - Advanced risk analytics with VaR
-- `POST /api/ml/models/retrain` - Retrain ML models
-- `GET /api/ml/models/status` - Model health and performance metrics
-
-### **Alerts & Notifications**
-- `GET /api/alerts` - Get user alerts with filtering
-- `POST /api/alerts` - Create custom alerts
-- `GET /api/alerts/stream` - Server-Sent Events for real-time alerts
-- `PUT /api/alerts/:id/acknowledge` - Acknowledge alert
-
-### **Social Trading & Community**
-- `GET /api/social/leaderboard` - Community performance rankings
-- `GET /api/social/insights` - Market sentiment and community stats
-- `POST /api/social/share` - Share anonymized performance
-- `GET /api/social/discussions` - Community market discussions
-
-### **Admin Dashboard**
-- `GET /api/admin/users` - User management (admin only)
-- `GET /api/admin/analytics` - Platform analytics
-- `PUT /api/admin/settings` - System configuration
-- `GET /api/admin/monitoring` - System health monitoring
-
-## 📚 Documentation
-
-### **Complete Documentation Suite**
-- **📖 [User Guide](./docs/user-guide/README.md)** - Comprehensive guide for traders and users
-- **🔌 [API Documentation](./docs/api/README.md)** - Complete API reference with examples
-- **🤖 [ML Analytics Guide](./docs/ml-analytics/README.md)** - Detailed ML model documentation
-- **🏗️ [Architecture Overview](./docs/README.md)** - Technical architecture and design decisions
-
-### **Quick Links**
-- **🚀 Getting Started**: Follow the user guide for step-by-step setup
-- **🔑 Authentication**: JWT-based secure authentication system
-- **📊 Trading Features**: Portfolio management and trade analytics
-- **🤖 AI Integration**: Machine learning model usage and interpretation
-- **⚠️ Risk Management**: VaR calculations and scenario analysis
-
-## 🛠️ Development
-
-### **Building & Testing**
-```bash
-# Build all packages
-npm run build
-
-# Run comprehensive tests
-npm run test
-
-# Lint and format code
-npm run lint
-npm run lint:fix
-
-# Type checking
-npm run type-check
-```
-
-### **Development Workflow**
-```bash
-# Start development environment
-npm run dev
-
-# Watch mode for types
-cd packages/types && npm run dev
-
-# ML service development
-cd services/ml-analytics && python app.py
-
-# Run health checks
-npm run health
-```
-
-### **Module Development**
-Each package and service can be developed independently:
-
-```bash
-# Frontend development
-cd apps/web && npm run dev
-
-# Backend API development
-cd apps/api && npm run dev
-
-# MT5 service development
-cd services/mt5-service && python app.py
-
-# ML analytics service
-cd services/ml-analytics && python app.py
-```
-
-## 🚀 Production Deployment
-
-### **Docker Deployment (Recommended)**
-```bash
-# Build and start with Docker Compose
-docker-compose up --build -d
-
-# Check service health
+# 📊 Monitor services
 docker-compose ps
 ```
 
-### **Manual Deployment**
+### 🔧 **Manual Production**
 ```bash
-# 1. Build all packages
+# 🏗️ Build all packages
 npm run build
 
-# 2. Set production environment variables
-cp .env.example .env.production
-# Edit .env.production with your production settings
-
-# 3. Install Python dependencies
+# 🐍 Install Python dependencies
 pip install -r services/mt5-service/requirements.txt
 pip install -r services/ml-analytics/requirements.txt
 
-# 4. Start services
+# 🚀 Start services
 npm start &
 cd services/mt5-service && python app.py &
 cd services/ml-analytics && python app.py &
 ```
 
-### **Environment Variables**
-```bash
-# Core Configuration
+### 🔑 **Environment Configuration**
+```env
 NODE_ENV=production
-JWT_SECRET=your-super-secret-jwt-key
+JWT_SECRET=your-ultra-secure-jwt-secret
 DATABASE_URL=./data/production.db
-
-# MT5 Integration
 MT5_LOGIN=your-mt5-login
 MT5_PASSWORD=your-mt5-password
 MT5_SERVER=your-broker-server
-
-# AI/ML Configuration
-OPENAI_API_KEY=your-openai-key (optional)
-ML_MODEL_PATH=./services/ml-analytics/saved_models
+OPENAI_API_KEY=your-openai-key
 ```
 
-## 📊 Performance & Monitoring
+---
 
-### **Key Metrics**
-- **Response Time**: < 100ms for API calls
-- **ML Inference**: < 500ms for predictions
-- **Real-time Updates**: < 50ms latency via SSE
-- **Uptime**: 99.9% availability target
+## 🤝 **Contributing**
 
-### **Monitoring Endpoints**
-- **Health Check**: `GET /health`
-- **Metrics**: `GET /metrics` 
-- **ML Model Status**: `GET /api/ml/models/status`
-- **System Resources**: `GET /api/admin/monitoring`
+We welcome contributions! Here's how to get involved:
 
-## 🤝 Contributing
+### 🛠️ **Development Workflow**
+1. 🍴 Fork the repository
+2. 🌿 Create feature branch (`git checkout -b feature/amazing-ai-feature`)
+3. 📝 Make documented changes
+4. ✅ Add comprehensive tests
+5. 🧪 Ensure all tests pass
+6. 📤 Submit pull request
 
-### **Development Guidelines**
-1. **Follow the modular architecture** - Keep services loosely coupled
-2. **Type Safety** - Add TypeScript types to `packages/types`
-3. **Shared Utilities** - Use utilities in `packages/utils`
-4. **Error Handling** - Implement comprehensive error handling
-5. **Testing** - Write unit and integration tests
-6. **Documentation** - Update relevant documentation
-
-### **Code Standards**
-- **ESLint + Prettier** for code formatting
-- **TypeScript strict mode** enabled
-- **Conventional Commits** for commit messages
-- **Jest** for testing JavaScript/TypeScript
-- **pytest** for testing Python services
-
-### **Pull Request Process**
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes with proper tests
-4. Run the full test suite (`npm run test`)
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-## 🔒 Security & Privacy
-
-- **🔐 End-to-end Encryption**: All sensitive data encrypted in transit and at rest
-- **🛡️ JWT Authentication**: Secure token-based authentication
-- **♿ WCAG 2.1 AA Compliance**: Full accessibility support
-- **🔍 Security Auditing**: Regular security audits and penetration testing
-- **📊 Data Anonymization**: Complete anonymization for social trading features
-- **🌍 GDPR Compliant**: Full compliance with data protection regulations
-
-## 📞 Support & Community
-
-### **Getting Help**
-- **📧 Email**: support@tradeinsight.com
-- **💬 Live Chat**: Available 24/5 during market hours
-- **📖 Documentation**: Comprehensive guides and API references
-- **🎥 Video Tutorials**: Step-by-step video guides
-
-### **Community**
-- **💬 Discord**: Join our trading community
-- **📚 Knowledge Base**: Extensive FAQ and troubleshooting
-- **🎓 Webinars**: Regular educational webinars
-- **📊 Blog**: Trading insights and platform updates
-
-## 📄 License
-
-**Private - All Rights Reserved**
-
-This software is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited.
+### 📋 **Code Standards**
+- **TypeScript**: Strict mode enabled with comprehensive typing
+- **Documentation**: 80% comment coverage for complex logic
+- **Error Handling**: User-friendly error messages
+- **Security**: Follow OWASP best practices
+- **Performance**: Optimize for speed and memory efficiency
+- **Testing**: Unit and integration test coverage
 
 ---
 
-## 🎯 What's Next?
+## 📄 **License**
 
-- **🔮 Advanced AI Models**: Enhanced prediction accuracy with transformer models
-- **📱 Mobile Apps**: Native iOS and Android applications
-- **🌍 Multi-Language**: Support for more languages and regions
-- **🏢 Enterprise Features**: Advanced compliance and reporting tools
-- **🔗 More Brokers**: Integration with additional trading platforms
+This project is licensed under the **GPL-3.0 License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-**Ready to revolutionize your trading with AI?** [Get started now →](./docs/user-guide/README.md)
+## 👨‍💻 **Author & Support**
+
+<div align="center">
+
+### **🎨 Created with ❤️ by Ariel Retes**
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit%20My%20Site-FF6B6B?style=for-the-badge&logo=web&logoColor=white)](https://coff.ee/arielretes)
+[![Email](https://img.shields.io/badge/Email-yhengdesigns@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yhengdesigns@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow%20Me-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Yheng)
+
+### ☕ **Support This Project**
+
+<a href="https://buymeacoffee.com/arielretes" target="_blank">
+  <img src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Development-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" />
+</a>
+
+*If TradeInsight helped you improve your trading performance or inspired your own fintech project, consider buying me a coffee! Your support helps me continue developing innovative trading technology solutions.* ☕✨
+
+</div>
+
+### 💬 **Get Support**
+
+- 🐛 **Bug Reports**: [Create an Issue](https://github.com/Yheng/TradeInsight/issues)
+- 💡 **Feature Requests**: [Start a Discussion](https://github.com/Yheng/TradeInsight/discussions)
+- 🔒 **Security Issues**: Report privately via email
+- 📧 **General Questions**: [yhengdesigns@gmail.com](mailto:yhengdesigns@gmail.com)
+
+---
+
+## 🏆 **Project Highlights**
+
+<div align="center">
+
+This application showcases:
+
+**🏗️ Full-Stack Development** • **📊 MT5 API Integration** • **🛡️ Financial Security**
+**🤖 AI Trading Analysis** • **⚡ Real-time Alerts** • **📱 Responsive Design**
+
+*Demonstrates how modern web technologies can solve real fintech challenges faced by retail traders in volatile markets.*
+
+</div>
+
+### 🎯 **Portfolio Benefits**
+- **Industry Relevance**: Addresses pressing 2024-2025 fintech challenge (70% trader losses)
+- **Technical Breadth**: Full-stack development with Python/Node.js integration
+- **AI Integration**: Practical AI implementation with Transformers.js and OpenAI
+- **Real-world Application**: Solves actual problems in the $7.5 trillion forex market
+- **Deployment Ready**: Docker containerization for easy deployment
+
+---
+
+<div align="center">
+
+### 🌟 **Star this project if it helped you!** 🌟
+
+*TradeInsight: Empowering retail traders with AI-driven insights and risk management.*
+
+### ☕ **Did TradeInsight enhance your trading or development journey?**
+
+**If this project improved your trading performance, helped you learn fintech development, or inspired your own trading tools, consider supporting its continued development:**
+
+<a href="https://buymeacoffee.com/arielretes" target="_blank">
+  <img src="https://img.shields.io/badge/☕%20Buy%20Me%20A%20Coffee-Support%20Fintech%20Innovation-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" />
+</a>
+
+*Your contribution helps me dedicate more time to creating impactful fintech solutions that benefit the trading community! 🚀📈*
+
+---
+
+[![GPL-3.0 License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://choosealicense.com/licenses/gpl-3.0/)
+[![Made with ❤️](https://img.shields.io/badge/Made%20with-❤️-red.svg)](https://github.com/Yheng/TradeInsight)
+[![Buy Me A Coffee](https://img.shields.io/badge/☕-Support%20Project-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/arielretes)
+
+</div>
