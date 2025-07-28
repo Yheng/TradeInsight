@@ -50,10 +50,8 @@ export class AIAnalysisService {
         this.initialized = true;
       } else {
         logger.info('Using Transformers.js for AI analysis');
-        // Initialize the text classification pipeline
-        this.classifier = await pipeline('text-classification', 'distilbert-base-uncased', {
-          revision: 'main',
-        });
+        // Initialize the text classification pipeline with a working sentiment analysis model
+        this.classifier = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english');
         this.initialized = true;
       }
       

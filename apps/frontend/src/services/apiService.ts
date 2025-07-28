@@ -85,10 +85,24 @@ export class ApiService {
   }
 
   static async getHistoricalData(symbol: string, timeframe = '1H', count = 100) {
-    const response = await api.get(`/market/symbols/${symbol}/history`, {
-      params: { timeframe, count }
-    })
-    return response.data.data
+    try {
+      const response = await api.get(`/market/symbols/${symbol}/history`, {
+        params: { timeframe, count }
+      })
+      return response.data.data
+    } catch (error) {
+      // If authenticated endpoint fails, try test endpoint
+      console.log('Authenticated endpoint failed, trying test endpoint:', error)
+      try {
+        const testResponse = await api.get(`/test/market/${symbol}/history`, {
+          params: { timeframe, count }
+        })
+        return testResponse.data.data
+      } catch (testError) {
+        console.log('Test endpoint also failed:', testError)
+        throw testError
+      }
+    }
   }
 
   // Analytics

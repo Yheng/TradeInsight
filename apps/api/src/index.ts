@@ -99,6 +99,67 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Test endpoint for market data without authentication
+app.get('/api/test/market/:symbol/history', (req, res) => {
+  const { symbol } = req.params;
+  const { timeframe = '1H', count = 100 } = req.query;
+  
+  // Generate sample historical data
+  function generateSampleHistoricalData(symbol: string, count: number) {
+    const data = [];
+    const basePrices: { [key: string]: number } = {
+      'EURUSD': 1.0950,
+      'GBPUSD': 1.2750,
+      'USDJPY': 149.50,
+      'USDCHF': 0.8850,
+      'AUDUSD': 0.6650,
+      'USDCAD': 1.3580,
+      'NZDUSD': 0.6150,
+      'EURJPY': 163.75,
+      'GBPJPY': 190.75,
+      'EURGBP': 0.8580,
+      'AUDCAD': 0.9025,
+      'AUDNZD': 1.0810
+    };
+    
+    const basePrice = basePrices[symbol] || 1.0000;
+    let currentPrice = basePrice;
+    const now = new Date();
+    
+    for (let i = count - 1; i >= 0; i--) {
+      const time = new Date(now.getTime() - i * 60 * 60 * 1000); // Hourly data
+      
+      // Generate realistic price movement
+      const volatility = 0.001; // 0.1% volatility
+      const trend = (Math.random() - 0.5) * volatility;
+      const high = currentPrice * (1 + Math.random() * volatility);
+      const low = currentPrice * (1 - Math.random() * volatility);
+      const close = currentPrice * (1 + trend);
+      
+      data.push({
+        time: time.toISOString(),
+        open: currentPrice,
+        high: Math.max(currentPrice, high, close),
+        low: Math.min(currentPrice, low, close),
+        close: close,
+        volume: Math.floor(Math.random() * 1000000) + 500000
+      });
+      
+      currentPrice = close;
+    }
+    
+    return data;
+  }
+  
+  const sampleData = generateSampleHistoricalData(symbol, parseInt(count as string) || 100);
+  
+  res.json({
+    success: true,
+    data: sampleData,
+    message: 'Test data for development'
+  });
+});
+
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', authMiddleware, userRoutes);

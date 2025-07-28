@@ -47,26 +47,62 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Load TradingView script
+    // Check if the library is already loaded
+    if (window.LightweightCharts) {
+      setIsLoading(false);
+      initializeChart();
+      return;
+    }
+
+    // Load TradingView Lightweight Charts script
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js';
     script.async = true;
     script.onload = () => {
-      setIsLoading(false);
-      initializeChart();
+      // Wait a moment for the library to be available
+      setTimeout(() => {
+        if (window.LightweightCharts) {
+          setIsLoading(false);
+          initializeChart();
+        } else {
+          setError('Chart library failed to initialize');
+          setIsLoading(false);
+        }
+      }, 100);
     };
     script.onerror = () => {
       setError('Failed to load charting library');
       setIsLoading(false);
     };
     
-    document.head.appendChild(script);
+    // Avoid duplicate script loading
+    const existingScript = document.querySelector('script[src*="lightweight-charts"]');
+    if (!existingScript) {
+      document.head.appendChild(script);
+    } else {
+      // Script exists but library not loaded yet, wait for it
+      const checkLibrary = setInterval(() => {
+        if (window.LightweightCharts) {
+          clearInterval(checkLibrary);
+          setIsLoading(false);
+          initializeChart();
+        }
+      }, 100);
+      
+      setTimeout(() => {
+        clearInterval(checkLibrary);
+        if (!window.LightweightCharts) {
+          setError('Chart library loading timeout');
+          setIsLoading(false);
+        }
+      }, 5000);
+    }
 
     return () => {
-      if (chartRef.current) {
-        chartRef.current.remove();
+      if (chartRef.current?.chart) {
+        chartRef.current.chart.remove();
+        chartRef.current = null;
       }
-      document.head.removeChild(script);
     };
   }, []);
 
@@ -77,17 +113,37 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
   }, [data, symbol, isLoading, error]);
 
   const initializeChart = () => {
-    if (!chartContainerRef.current || !window.LightweightCharts) return;
+    if (!chartContainerRef.current || !window.LightweightCharts) {
+      console.log('Chart initialization requirements not met', {
+        container: !!chartContainerRef.current,
+        library: !!window.LightweightCharts
+      });
+      return;
+    }
+
+    // Clean up existing chart
+    if (chartRef.current?.chart) {
+      try {
+        chartRef.current.chart.remove();
+      } catch (e) {
+        console.warn('Error removing existing chart:', e);
+      }
+    }
 
     try {
-      const chart = window.LightweightCharts.createChart(chartContainerRef.current, {
+      console.log('Initializing chart with container dimensions:', {
         width: chartContainerRef.current.clientWidth,
-        height,
+        height
+      });
+
+      const chart = window.LightweightCharts.createChart(chartContainerRef.current, {
+        width: Math.max(400, chartContainerRef.current.clientWidth),
+        height: Math.max(300, height),
         layout: {
           backgroundColor: theme === 'dark' ? '#1e293b' : '#ffffff',
           textColor: theme === 'dark' ? '#d1d5db' : '#374151',
           fontSize: 12,
-          fontFamily: 'Inter, sans-serif',
+          fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
         },
         grid: {
           vertLines: {
@@ -110,6 +166,8 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
         },
       });
 
+      console.log('Chart created successfully');
+
       // Create candlestick series
       const candlestickSeries = chart.addCandlestickSeries({
         upColor: '#10b981',
@@ -119,6 +177,8 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
         wickDownColor: '#ef4444',
         wickUpColor: '#10b981',
       });
+
+      console.log('Candlestick series added');
 
       // Create volume series
       const volumeSeries = chart.addHistogramSeries({
@@ -133,6 +193,8 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
         },
       });
 
+      console.log('Volume series added');
+
       chartRef.current = {
         chart,
         candlestickSeries,
@@ -141,19 +203,29 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
 
       // Handle resize
       const handleResize = () => {
-        if (chartContainerRef.current) {
-          chart.applyOptions({
-            width: chartContainerRef.current.clientWidth,
-          });
+        if (chartContainerRef.current && chartRef.current?.chart) {
+          try {
+            chartRef.current.chart.applyOptions({
+              width: Math.max(400, chartContainerRef.current.clientWidth),
+            });
+          } catch (e) {
+            console.warn('Error during chart resize:', e);
+          }
         }
       };
 
       window.addEventListener('resize', handleResize);
 
-      updateChartData();
+      // Update with data if available
+      if (data.length > 0) {
+        console.log('Updating chart with data:', data.length, 'items');
+        updateChartData();
+      } else {
+        console.log('No data available for chart');
+      }
     } catch (error) {
       console.error('Failed to initialize chart:', error);
-      setError('Failed to initialize chart');
+      setError('Failed to initialize chart: ' + (error as Error).message);
     }
   };
 
@@ -161,34 +233,62 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
     if (!chartRef.current || !data.length) return;
 
     try {
-      // Format data for TradingView
-      const candlestickData = data.map(item => ({
-        time: item.time,
-        open: item.open,
-        high: item.high,
-        low: item.low,
-        close: item.close,
-      }));
+      // Format data for TradingView Lightweight Charts
+      const candlestickData = data.map(item => {
+        // Convert time to timestamp if it's a string
+        let timestamp;
+        if (typeof item.time === 'string') {
+          timestamp = new Date(item.time).getTime() / 1000;
+        } else {
+          timestamp = item.time;
+        }
+
+        return {
+          time: timestamp,
+          open: parseFloat(item.open.toString()),
+          high: parseFloat(item.high.toString()),
+          low: parseFloat(item.low.toString()),
+          close: parseFloat(item.close.toString()),
+        };
+      }).sort((a, b) => a.time - b.time); // Ensure data is sorted by time
 
       const volumeData = data
-        .filter(item => item.volume !== undefined)
-        .map(item => ({
-          time: item.time,
-          value: item.volume!,
-          color: item.close >= item.open ? '#10b98160' : '#ef444460',
-        }));
+        .filter(item => item.volume !== undefined && item.volume !== null)
+        .map(item => {
+          let timestamp;
+          if (typeof item.time === 'string') {
+            timestamp = new Date(item.time).getTime() / 1000;
+          } else {
+            timestamp = item.time;
+          }
 
+          return {
+            time: timestamp,
+            value: parseFloat(item.volume!.toString()),
+            color: item.close >= item.open ? '#10b98160' : '#ef444460',
+          };
+        }).sort((a, b) => a.time - b.time);
+
+      // Clear existing data first
+      chartRef.current.candlestickSeries.setData([]);
+      chartRef.current.volumeSeries.setData([]);
+
+      // Set new data
       chartRef.current.candlestickSeries.setData(candlestickData);
       
       if (volumeData.length > 0) {
         chartRef.current.volumeSeries.setData(volumeData);
       }
 
-      // Fit content
-      chartRef.current.chart.timeScale().fitContent();
+      // Fit content to show all data
+      setTimeout(() => {
+        if (chartRef.current?.chart) {
+          chartRef.current.chart.timeScale().fitContent();
+        }
+      }, 100);
     } catch (error) {
       console.error('Failed to update chart data:', error);
-      setError('Failed to update chart data');
+      setError('Failed to update chart data: ' + (error as Error).message);
     }
   };
 

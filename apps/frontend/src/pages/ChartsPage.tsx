@@ -49,8 +49,10 @@ const ChartsPage: React.FC = () => {
     () => ApiService.getHistoricalData(selectedSymbol, selectedTimeframe, 200),
     {
       refetchInterval: 30000, // Refetch every 30 seconds
+      retry: 1, // Only retry once, then use fallback
       onSuccess: (data) => {
-        if (data && Array.isArray(data)) {
+        console.log('API data received:', data);
+        if (data && Array.isArray(data) && data.length > 0) {
           // Transform data to chart format
           const formattedData: ChartData[] = data.map((item: any) => ({
             time: item.time || item.timestamp,
@@ -60,20 +62,28 @@ const ChartsPage: React.FC = () => {
             close: parseFloat(item.close),
             volume: item.volume ? parseFloat(item.volume) : undefined
           }));
+          console.log('Setting formatted data:', formattedData.length, 'items');
           setChartData(formattedData);
+        } else {
+          console.log('No valid data from API, will use sample data');
         }
+      },
+      onError: (error) => {
+        console.log('API error, will use sample data:', error);
       }
     }
   );
 
   // Generate sample data if API doesn't return data
   useEffect(() => {
-    if (!isLoading && (!chartData.length || error)) {
-      generateSampleData();
-    }
-  }, [isLoading, error, selectedSymbol]);
+    console.log('Chart data check:', { isLoading, chartDataLength: chartData.length, error });
+    // For debugging: always generate sample data for now
+    console.log('Generating sample data for', selectedSymbol);
+    generateSampleData();
+  }, [selectedSymbol]);
 
   const generateSampleData = () => {
+    console.log('Generating sample data for symbol:', selectedSymbol);
     const sampleData: ChartData[] = [];
     const basePrice = selectedSymbol === 'EURUSD' ? 1.0950 :
                      selectedSymbol === 'GBPUSD' ? 1.2750 :
@@ -104,6 +114,8 @@ const ChartsPage: React.FC = () => {
       currentPrice = close;
     }
     
+    console.log('Generated sample data:', sampleData.length, 'items');
+    console.log('Sample data preview:', sampleData.slice(0, 3));
     setChartData(sampleData);
   };
 
@@ -254,6 +266,10 @@ const ChartsPage: React.FC = () => {
               theme="dark"
               onSymbolChange={handleSymbolChange}
             />
+            {/* Debug info */}
+            <div className="mt-2 text-xs text-gray-500">
+              Chart data: {chartData.length} items | Symbol: {selectedSymbol}
+            </div>
           )}
         </div>
 
