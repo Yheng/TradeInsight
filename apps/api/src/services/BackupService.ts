@@ -281,7 +281,7 @@ export class BackupService {
     const schedule = require('node-schedule');
     
     // Schedule daily backups at 2 AM
-    const job = schedule.scheduleJob('0 2 * * *', async () => {
+    schedule.scheduleJob('0 2 * * *', async () => {
       try {
         await this.createBackup('scheduled', 'Daily automatic backup');
       } catch (error) {

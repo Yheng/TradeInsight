@@ -44,7 +44,7 @@ const ChartsPage: React.FC = () => {
   ];
 
   // Fetch historical data
-  const { data: _historicalData, isLoading, error, refetch } = useQuery(
+  const { isLoading, error, refetch } = useQuery(
     ['historicalData', selectedSymbol, selectedTimeframe],
     () => ApiService.getHistoricalData(selectedSymbol, selectedTimeframe, 200),
     {

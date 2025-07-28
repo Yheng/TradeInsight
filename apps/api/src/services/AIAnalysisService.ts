@@ -69,7 +69,7 @@ export class AIAnalysisService {
     ruleBasedSuggestions: RuleBasedAnalysis[];
   }> {
     try {
-      const { userId: _userId, trades, riskProfile } = input;
+      const { trades, riskProfile } = input;
 
       // Ensure AI service is initialized
       if (!this.initialized) {
@@ -129,9 +129,9 @@ export class AIAnalysisService {
 
     // Calculate trading metrics
     const profitableTrades = trades.filter(t => t.profit > 0);
-    const _losingTrades = trades.filter(t => t.profit < 0);
+    // const _losingTrades = trades.filter(t => t.profit < 0); // Currently unused
     const winRate = (profitableTrades.length / trades.length) * 100;
-    const _totalProfit = trades.reduce((sum, t) => sum + t.profit, 0);
+    // const _totalProfit = trades.reduce((sum, t) => sum + t.profit, 0); // Currently unused
     const totalVolume = trades.reduce((sum, t) => sum + t.volume, 0);
     const avgVolume = totalVolume / trades.length;
 

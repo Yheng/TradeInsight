@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import os from 'os';
-import fs from 'fs';
+// import fs from 'fs'; // Currently unused
 // import path from 'path'; // Currently unused
 import { logger } from '@tradeinsight/utils';
 
@@ -171,7 +171,7 @@ class MonitoringService extends EventEmitter {
   }
 
   private async getSystemMetrics(timestamp: number): Promise<SystemMetrics> {
-    const cpus = os.cpus();
+    // const _cpus = os.cpus(); // Currently unused
     const totalMem = os.totalmem();
     const freeMem = os.freemem();
     const usedMem = totalMem - freeMem;
@@ -202,9 +202,9 @@ class MonitoringService extends EventEmitter {
   }
 
   private async getApplicationMetrics(timestamp: number): Promise<ApplicationMetrics> {
-    const timeSinceReset = timestamp - this.lastRequestReset;
-    const requestsPerSecond = timeSinceReset > 0 ? (this.requestCount / (timeSinceReset / 1000)) : 0;
-    const errorRate = this.requestCount > 0 ? (this.errorCount / this.requestCount) * 100 : 0;
+    // const timeSinceReset = timestamp - this.lastRequestReset; // Currently unused
+    // const _requestsPerSecond = timeSinceReset > 0 ? (this.requestCount / (timeSinceReset / 1000)) : 0; // Currently unused
+    // const _errorRate = this.requestCount > 0 ? (this.errorCount / this.requestCount) * 100 : 0; // Currently unused
     const avgResponseTime = this.requestCount > 0 ? this.responseTimeSum / this.requestCount : 0;
 
     return {
@@ -280,23 +280,14 @@ class MonitoringService extends EventEmitter {
     used: number;
     usagePercent: number;
   }> {
-    try {
-      const stats = fs.statSync('.');
-      // This is a simplified version - in production you'd want to check actual disk space
-      return {
-        total: 100 * 1024 * 1024 * 1024, // 100GB placeholder
-        free: 50 * 1024 * 1024 * 1024,   // 50GB placeholder
-        used: 50 * 1024 * 1024 * 1024,   // 50GB placeholder
-        usagePercent: 50 // 50% placeholder
-      };
-    } catch (error) {
-      return {
-        total: 0,
-        free: 0,
-        used: 0,
-        usagePercent: 0
-      };
-    }
+    // const _stats = fs.statSync('.'); // Currently unused
+    // This is a simplified version - in production you'd want to check actual disk space
+    return {
+      total: 100 * 1024 * 1024 * 1024, // 100GB placeholder
+      free: 50 * 1024 * 1024 * 1024,   // 50GB placeholder
+      used: 50 * 1024 * 1024 * 1024,   // 50GB placeholder
+      usagePercent: 50 // 50% placeholder
+    };
   }
 
   private async checkAlerts(

@@ -247,7 +247,7 @@ export class AlertService {
     const alerts: Alert[] = [];
     const symbolGroups = this.groupTradesBySymbol(trades);
 
-    for (const [symbol, symbolTrades] of Object.entries(symbolGroups)) {
+    for (const [symbol] of Object.entries(symbolGroups)) {
       try {
         // Get recent market data for the symbol
         const symbolInfo = await mt5Service.getSymbolInfo(symbol);
@@ -282,7 +282,7 @@ export class AlertService {
   private async checkRiskWarning(
     userId: string, 
     trades: any[], 
-    riskProfile: any
+    _riskProfile: any
   ): Promise<Alert | null> {
     const winRate = (trades.filter(t => t.profit > 0).length / trades.length) * 100;
     const totalExposure = trades.reduce((sum, t) => sum + Math.abs(t.volume), 0);

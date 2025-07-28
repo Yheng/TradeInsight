@@ -102,7 +102,7 @@ class RequestMonitor {
 const requestMonitor = new RequestMonitor();
 
 export const monitoringMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const _startTime = Date.now();
+  // const _startTime = Date.now(); // Currently unused
   const startHrTime = process.hrtime();
 
   // Override res.end to capture metrics
