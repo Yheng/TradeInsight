@@ -14,14 +14,14 @@ describe('LoadingSpinner', () => {
     render(<LoadingSpinner size="lg" />)
     const spinner = screen.getByRole('status')
     expect(spinner).toBeInTheDocument()
-    expect(spinner.querySelector('svg')).toHaveClass('w-8', 'h-8')
+    expect(spinner).toHaveClass('w-8', 'h-8')
   })
 
   it('renders with small size', () => {
     render(<LoadingSpinner size="sm" />)
     const spinner = screen.getByRole('status')
     expect(spinner).toBeInTheDocument()
-    expect(spinner.querySelector('svg')).toHaveClass('w-4', 'h-4')
+    expect(spinner).toHaveClass('w-4', 'h-4')
   })
 
   it('displays loading text', () => {
