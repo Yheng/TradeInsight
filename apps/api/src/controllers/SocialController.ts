@@ -8,7 +8,7 @@ export class SocialController {
    */
   static async getCommunityMetrics(req: AuthenticatedRequest, res: Response) {
     try {
-      const { timeframe = '7d', category: _category = 'all' } = req.query;
+      const { timeframe = '7d' } = req.query;
       
       // Get timeframe filter
       let timeFilter = '';

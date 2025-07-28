@@ -1,7 +1,7 @@
 import request from 'supertest'
 import express from 'express'
 import authRoutes from '../../routes/auth'
-import { DatabaseService } from '../../database/DatabaseService'
+// import { DatabaseService } from '../../database/DatabaseService' // Currently unused
 
 const app = express()
 app.use(express.json())

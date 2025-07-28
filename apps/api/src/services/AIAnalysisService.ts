@@ -69,7 +69,7 @@ export class AIAnalysisService {
     ruleBasedSuggestions: RuleBasedAnalysis[];
   }> {
     try {
-      const { userId, trades, riskProfile } = input;
+      const { userId: _userId, trades, riskProfile } = input;
 
       // Ensure AI service is initialized
       if (!this.initialized) {
@@ -129,9 +129,9 @@ export class AIAnalysisService {
 
     // Calculate trading metrics
     const profitableTrades = trades.filter(t => t.profit > 0);
-    const losingTrades = trades.filter(t => t.profit < 0);
+    const _losingTrades = trades.filter(t => t.profit < 0);
     const winRate = (profitableTrades.length / trades.length) * 100;
-    const totalProfit = trades.reduce((sum, t) => sum + t.profit, 0);
+    const _totalProfit = trades.reduce((sum, t) => sum + t.profit, 0);
     const totalVolume = trades.reduce((sum, t) => sum + t.volume, 0);
     const avgVolume = totalVolume / trades.length;
 
@@ -379,7 +379,7 @@ Risk Profile: Max Leverage ${riskProfile?.maxLeverage || 100}x, Risk Tolerance: 
     }
   }
 
-  private static generateReasoning(trades: any[], symbol: string): string {
+  private static generateReasoning(trades: any[], _symbol: string): string {
     const winRate = (trades.filter(t => t.profit > 0).length / trades.length) * 100;
     const totalProfit = trades.reduce((sum, t) => sum + t.profit, 0);
     

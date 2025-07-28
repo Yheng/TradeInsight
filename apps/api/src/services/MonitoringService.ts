@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import os from 'os';
 import fs from 'fs';
-import path from 'path';
+// import path from 'path'; // Currently unused
 import { logger } from '@tradeinsight/utils';
 
 export interface SystemMetrics {
