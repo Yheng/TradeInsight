@@ -112,7 +112,7 @@ export class BackupService {
       
       return backupInfo;
     } catch (error) {
-      logger.error('Backup creation failed', { error: error.message });
+      logger.error('Backup creation failed', { error: (error as Error).message });
       throw error;
     }
   }
@@ -151,7 +151,7 @@ export class BackupService {
       
       logger.info('Backup restored successfully', { backupName, targetPath: this.dbPath });
     } catch (error) {
-      logger.error('Backup restoration failed', { error: error.message, backupName });
+      logger.error('Backup restoration failed', { error: (error as Error).message, backupName });
       throw error;
     }
   }
@@ -183,7 +183,7 @@ export class BackupService {
         try {
           metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
         } catch (error) {
-          logger.warn('Could not read metadata', { file, error: error.message });
+          logger.warn('Could not read metadata', { file, error: (error as Error).message });
         }
       }
       
@@ -222,7 +222,7 @@ export class BackupService {
       
       return isValid;
     } catch (error) {
-      logger.error('Backup verification error', { error: error.message, backupName });
+      logger.error('Backup verification error', { error: (error as Error).message, backupName });
       throw error;
     }
   }
@@ -248,13 +248,13 @@ export class BackupService {
           } catch (error) {
             logger.warn('Could not remove old backup', { 
               name: backup.name, 
-              error: error.message 
+              error: (error as Error).message 
             });
           }
         }
       }
     } catch (error) {
-      logger.error('Failed to cleanup old backups', { error: error.message });
+      logger.error('Failed to cleanup old backups', { error: (error as Error).message });
     }
   }
 
@@ -270,7 +270,7 @@ export class BackupService {
       
       return result?.user_version || 'unknown';
     } catch (error) {
-      logger.warn('Could not get database version', { error: error.message });
+      logger.warn('Could not get database version', { error: (error as Error).message });
       return 'unknown';
     }
   }
@@ -285,7 +285,7 @@ export class BackupService {
       try {
         await this.createBackup('scheduled', 'Daily automatic backup');
       } catch (error) {
-        logger.error('Scheduled backup failed', { error: error.message });
+        logger.error('Scheduled backup failed', { error: (error as Error).message });
       }
     });
     

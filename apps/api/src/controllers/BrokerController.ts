@@ -83,7 +83,7 @@ export class BrokerController {
 
       res.json({
         success: true,
-        data: users.map((user: any) => ({
+        data: (users as any[]).map((user: any) => ({
           user_id: user.user_id,
           win_rate: parseFloat(String(user.win_rate || 0)),
           drawdown: parseFloat(String(user.drawdown || 0)),
@@ -227,14 +227,14 @@ export class BrokerController {
         success: true,
         data: {
           overview: {
-            total_users: parseInt(String(overview?.total_users || 0)),
-            new_users: parseInt(String(overview?.new_users || 0)),
-            active_users: parseInt(String(overview?.active_users || 0)),
-            total_trades: parseInt(String(overview?.total_trades || 0)),
-            recent_trades: parseInt(String(overview?.recent_trades || 0)),
-            avg_win_rate: parseFloat(String(overview?.avg_win_rate || 0)),
-            avg_risk_score: parseFloat(String(overview?.avg_risk_score || 5.0)),
-            recent_profit: parseFloat(String(overview?.recent_profit || 0))
+            total_users: parseInt(String((overview as any)?.total_users || 0)),
+            new_users: parseInt(String((overview as any)?.new_users || 0)),
+            active_users: parseInt(String((overview as any)?.active_users || 0)),
+            total_trades: parseInt(String((overview as any)?.total_trades || 0)),
+            recent_trades: parseInt(String((overview as any)?.recent_trades || 0)),
+            avg_win_rate: parseFloat(String((overview as any)?.avg_win_rate || 0)),
+            avg_risk_score: parseFloat(String((overview as any)?.avg_risk_score || 5.0)),
+            recent_profit: parseFloat(String((overview as any)?.recent_profit || 0))
           },
           performance_distribution: performanceDistribution.map(tier => ({
             tier: tier.performance_tier,
@@ -242,7 +242,7 @@ export class BrokerController {
             avg_win_rate: parseFloat(String(tier.avg_win_rate || 0)),
             avg_profit_factor: parseFloat(String(tier.avg_profit_factor || 0))
           })),
-          top_symbols: topSymbols.map(symbol => ({
+          top_symbols: topSymbols.map((symbol: any) => ({
             symbol: symbol.symbol,
             trade_count: parseInt(String(symbol.trade_count)),
             success_rate: parseFloat(String(symbol.success_rate || 0)) * 100,
