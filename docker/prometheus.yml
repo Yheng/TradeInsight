@@ -1,0 +1,34 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'tradeinsight-api'
+    static_configs:
+      - targets: ['api:3000']
+    metrics_path: '/api/monitoring/health'
+    scrape_interval: 30s
+
+  - job_name: 'tradeinsight-mt5'
+    static_configs:
+      - targets: ['mt5-service:8000']
+    metrics_path: '/health'
+    scrape_interval: 30s
+
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:80']
+    metrics_path: '/nginx_status'
+    scrape_interval: 30s
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']

@@ -1,0 +1,137 @@
+version: '3.8'
+
+services:
+  # Frontend Application
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    environment:
+      - VITE_API_URL=http://localhost:${API_PORT:-3000}
+      - NODE_ENV=${NODE_ENV:-development}
+    volumes:
+      - ./apps/frontend:/app
+      - /app/node_modules
+    depends_on:
+      - api
+    networks:
+      - tradeinsight
+
+  # API Application
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "${API_PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - DATABASE_PATH=/app/data/tradeinsight.db
+      - LOG_DIR=/app/logs
+      - BACKUP_DIR=/app/backups
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-key}
+      - FRONTEND_URL=http://localhost:${FRONTEND_PORT:-5173}
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+      - tradeinsight-data:/app/data
+      - tradeinsight-logs:/app/logs
+      - tradeinsight-backups:/app/backups
+    depends_on:
+      - mt5-service
+    networks:
+      - tradeinsight
+
+  # MT5 Service
+  mt5-service:
+    build:
+      context: .
+      dockerfile: services/mt5-service/Dockerfile
+    ports:
+      - "${MT5_PORT:-8000}:8000"
+    environment:
+      - FLASK_ENV=${NODE_ENV:-development}
+      - MT5_SERVER=${MT5_SERVER:-}
+      - MT5_LOGIN=${MT5_LOGIN:-}
+      - MT5_PASSWORD=${MT5_PASSWORD:-}
+    volumes:
+      - ./services/mt5-service:/app
+    networks:
+      - tradeinsight
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - tradeinsight-redis:/data
+    networks:
+      - tradeinsight
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "${NGINX_PORT:-80}:80"
+      - "${NGINX_SSL_PORT:-443}:443"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - tradeinsight
+
+  # Prometheus for monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
+      - tradeinsight-prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - tradeinsight
+
+  # Grafana for dashboards
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - tradeinsight-grafana:/var/lib/grafana
+      - ./docker/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./docker/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    networks:
+      - tradeinsight
+
+volumes:
+  tradeinsight-data:
+    driver: local
+  tradeinsight-logs:
+    driver: local
+  tradeinsight-backups:
+    driver: local
+  tradeinsight-redis:
+    driver: local
+  tradeinsight-prometheus:
+    driver: local
+  tradeinsight-grafana:
+    driver: local
+
+networks:
+  tradeinsight:
+    driver: bridge
