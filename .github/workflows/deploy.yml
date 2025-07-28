@@ -89,7 +89,7 @@ jobs:
         echo "${{ steps.version.outputs.version }}" > dist/VERSION
         
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-${{ steps.version.outputs.version }}
         path: dist/
@@ -103,7 +103,7 @@ jobs:
     
     steps:
     - name: Download build artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: build-${{ needs.build.outputs.version }}
         path: dist/
@@ -142,7 +142,7 @@ jobs:
     
     steps:
     - name: Download build artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: build-${{ needs.build.outputs.version }}
         path: dist/
