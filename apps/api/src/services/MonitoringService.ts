@@ -120,7 +120,7 @@ class MonitoringService extends EventEmitter {
       try {
         await this.collectMetrics();
       } catch (error) {
-        logger.error('Failed to collect metrics', { error: error.message });
+        logger.error('Failed to collect metrics', { error: (error as Error).message });
       }
     }, intervalMs);
 
@@ -263,12 +263,12 @@ class MonitoringService extends EventEmitter {
             
             resolve(result);
           } catch (error) {
-            logger.warn('Error calculating CPU usage in timeout', { error: error.message });
+            logger.warn('Error calculating CPU usage in timeout', { error: (error as Error).message });
             resolve(0);
           }
         }, 100);
       } catch (error) {
-        logger.warn('Error starting CPU usage calculation', { error: error.message });
+        logger.warn('Error starting CPU usage calculation', { error: (error as Error).message });
         resolve(0);
       }
     });
