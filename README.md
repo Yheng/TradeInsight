@@ -117,32 +117,27 @@ docker-compose up --build
 git clone https://github.com/Yheng/TradeInsight.git
 cd TradeInsight
 
-# 📦 Install Frontend Dependencies
-cd frontend
-npm install react react-dom axios framer-motion react-chartjs-2 chart.js tailwindcss postcss autoprefixer
-
-# 🖥️ Install Backend Dependencies
-cd ../backend
-npm install express sqlite3 cors dotenv bcrypt jsonwebtoken axios @xenova/transformers
+# 📦 Install All Dependencies (using npm workspaces)
+npm install
 
 # 🐍 Install Python Dependencies
-cd ../python-service
+cd services/mt5-service
 pip install -r requirements.txt
 
 # 🔑 Configure Environment Variables
-cd ../backend
+cd ../../apps/api
 cp .env.example .env
 # Edit .env with your MT5 credentials (see configuration section)
 
 # 🚀 Start All Services
 # Terminal 1: Python MT5 Service
-cd python-service && python mt5_service.py
+cd services/mt5-service && python app.py
 
 # Terminal 2: Backend API
-cd backend && node server.js
+cd apps/api && npm run dev
 
 # Terminal 3: Frontend
-cd frontend && npm run dev
+cd apps/frontend && npm run dev
 
 # 🌐 Access URLs
 # Frontend: http://localhost:5173
@@ -152,7 +147,7 @@ cd frontend && npm run dev
 
 ### 🔑 **Environment Configuration**
 
-Create `backend/.env` file (add to `.gitignore`):
+Create `apps/api/.env` file (add to `.gitignore`):
 ```env
 SQLITE_PATH=./data/db.sqlite
 OPENAI_API_KEY=your_openai_key_here
@@ -220,32 +215,36 @@ TradeInsight/
 │   ├── 🔌 api/                    # API documentation
 │   ├── 📖 user-guide/            # User guides
 │   └── 🤖 ml-analytics/          # ML documentation
-├── 🎨 frontend/                    # React SPA
-│   ├── 📦 package.json
-│   ├── ⚡ vite.config.js
-│   ├── 🎨 tailwind.config.js
-│   ├── 🔧 Dockerfile             # Optional Docker
-│   └── 📁 src/
-│       ├── 🚀 main.jsx           # App entry point
-│       ├── 🏠 App.jsx            # Main component
-│       ├── 🎨 index.css          # Global styles
-│       ├── 🧩 components/        # React components
-│       ├── 📄 pages/             # Page components
-│       └── 🛠️ utils/             # Frontend utilities
-├── 🖥️ backend/                     # Express API Server
-│   ├── 📦 package.json
-│   ├── 🚀 server.js              # Main server
-│   ├── 🔑 .env.example           # Environment template
-│   ├── 🔧 Dockerfile             # Optional Docker
-│   └── 📁 src/
-│       ├── 🗄️ models/            # Database models
-│       ├── 🛣️ routes/            # API endpoints
-│       ├── 🛡️ middleware/        # Express middleware
-│       └── 🛠️ utils/             # Backend utilities
-├── 🐍 python-service/             # MT5 Integration Service
-│   ├── 🐍 mt5_service.py         # Flask MT5 service
-│   ├── 📦 requirements.txt
-│   └── 🔧 Dockerfile             # Optional Docker
+├── 📱 apps/                        # Applications
+│   ├── 🎨 frontend/               # React SPA
+│   │   ├── 📦 package.json
+│   │   ├── ⚡ vite.config.js
+│   │   ├── 🎨 tailwind.config.js
+│   │   └── 📁 src/
+│   │       ├── 🚀 main.tsx        # App entry point
+│   │       ├── 🏠 App.tsx         # Main component
+│   │       ├── 🎨 index.css       # Global styles
+│   │       ├── 🧩 components/     # React components
+│   │       ├── 📄 pages/          # Page components
+│   │       └── 🛠️ utils/          # Frontend utilities
+│   └── 🖥️ api/                    # Express API Server
+│       ├── 📦 package.json
+│       ├── 🚀 src/server.ts       # Main server
+│       ├── 🔑 .env.example        # Environment template
+│       └── 📁 src/
+│           ├── 🗄️ models/         # Database models
+│           ├── 🛣️ routes/         # API endpoints
+│           ├── 🛡️ middleware/     # Express middleware
+│           └── 🛠️ utils/          # Backend utilities
+├── 🔧 services/                    # Microservices
+│   ├── 🐍 mt5-service/            # MT5 Integration Service
+│   │   ├── 🐍 app.py              # Flask MT5 service
+│   │   ├── 📦 requirements.txt
+│   │   └── 📦 requirements-ci.txt # CI/CD requirements
+│   └── 🤖 ml-analytics/           # ML Analytics Service
+├── 📦 packages/                    # Shared packages
+│   ├── 🔧 types/                  # Shared TypeScript types
+│   └── 🛠️ utils/                  # Shared utilities
 ├── 🔧 docker-compose.yml          # Optional Docker setup
 └── 💾 data/                       # SQLite database files
 ```
@@ -384,13 +383,15 @@ docker-compose ps
 npm run build
 
 # 🐍 Install Python dependencies
-pip install -r services/mt5-service/requirements.txt
-pip install -r services/ml-analytics/requirements.txt
+cd services/mt5-service && pip install -r requirements.txt
+cd ../ml-analytics && pip install -r requirements.txt
 
 # 🚀 Start services
-npm start &
-cd services/mt5-service && python app.py &
-cd services/ml-analytics && python app.py &
+npm run start:all &
+# Or start individually:
+# cd apps/api && npm start &
+# cd apps/frontend && npm run preview &
+# cd services/mt5-service && python app.py &
 ```
 
 ### 🔑 **Environment Configuration**
@@ -415,16 +416,18 @@ We welcome contributions! Here's how to get involved:
 2. 🌿 Create feature branch (`git checkout -b feature/amazing-ai-feature`)
 3. 📝 Make documented changes
 4. ✅ Add comprehensive tests
-5. 🧪 Ensure all tests pass
-6. 📤 Submit pull request
+5. 🧪 Run tests: `npm run test:all`
+6. 🔍 Run linting: `npm run lint`
+7. 📤 Submit pull request
 
 ### 📋 **Code Standards**
 - **TypeScript**: Strict mode enabled with comprehensive typing
-- **Documentation**: 80% comment coverage for complex logic
+- **Testing**: Run `npm run test:coverage` for unit tests
+- **Linting**: Use `npm run lint` before committing
+- **Type Checking**: Run `npm run typecheck` to verify types
 - **Error Handling**: User-friendly error messages
 - **Security**: Follow OWASP best practices
 - **Performance**: Optimize for speed and memory efficiency
-- **Testing**: Unit and integration test coverage
 
 ---
 
