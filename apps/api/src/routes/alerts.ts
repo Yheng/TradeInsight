@@ -1,7 +1,7 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 const { v4: uuidv4 } = require('uuid');
-import { Alert, AlertType } from '@tradeinsight/types';
+import { Alert } from '@tradeinsight/types';
 import { DatabaseService } from '../database/DatabaseService';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { asyncHandler } from '../middleware/errorHandler';

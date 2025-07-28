@@ -428,11 +428,11 @@ class MonitoringService extends EventEmitter {
   }
 
   // Getters for metrics
-  getSystemMetrics(limit: number = 100): SystemMetrics[] {
+  getSystemMetricsHistory(limit: number = 100): SystemMetrics[] {
     return this.systemMetrics.slice(-limit);
   }
 
-  getApplicationMetrics(limit: number = 100): ApplicationMetrics[] {
+  getApplicationMetricsHistory(limit: number = 100): ApplicationMetrics[] {
     return this.appMetrics.slice(-limit);
   }
 

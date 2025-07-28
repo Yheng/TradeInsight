@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { DatabaseService } from '../database/DatabaseService';
 import { AuthenticatedRequest } from '../types/auth';
 
@@ -8,7 +8,7 @@ export class SocialController {
    */
   static async getCommunityMetrics(req: AuthenticatedRequest, res: Response) {
     try {
-      const { timeframe = '7d', category = 'all' } = req.query;
+      const { timeframe = '7d', category: _category = 'all' } = req.query;
       
       // Get timeframe filter
       let timeFilter = '';

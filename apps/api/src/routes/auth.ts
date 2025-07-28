@@ -1,10 +1,10 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 const { v4: uuidv4 } = require('uuid');
-import { hashPassword, comparePassword, generateToken, validateEmail, validatePassword } from '@tradeinsight/utils';
+import { hashPassword, comparePassword, generateToken, validatePassword } from '@tradeinsight/utils';
 import { User, UserRole } from '@tradeinsight/types';
 import { DatabaseService } from '../database/DatabaseService';
-import { asyncHandler, createError } from '../middleware/errorHandler';
+import { asyncHandler } from '../middleware/errorHandler';
 
 const router = express.Router();
 

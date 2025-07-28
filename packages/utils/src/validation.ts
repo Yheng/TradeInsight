@@ -22,7 +22,7 @@ export const validatePassword = (password: string): { isValid: boolean; errors: 
     errors.push('Password must contain at least one number');
   }
   
-  if (!/[!@#$%^&*(),.?":{}|<>\-]/.test(password)) {
+  if (!/[!@#$%^&*(),.?":{}|<>-]/.test(password)) {
     errors.push('Password must contain at least one special character');
   }
   
@@ -43,5 +43,5 @@ export const validateVolume = (volume: number): boolean => {
 };
 
 export const sanitizeInput = (input: string): string => {
-  return input.trim().replace(/[<>\"']/g, '');
+  return input.trim().replace(/[<>"']/g, '');
 };
