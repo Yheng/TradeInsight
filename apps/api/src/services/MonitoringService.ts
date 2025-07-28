@@ -144,26 +144,30 @@ class MonitoringService extends EventEmitter {
   }
 
   private async collectMetrics(): Promise<void> {
-    const timestamp = Date.now();
+    try {
+      const timestamp = Date.now();
 
-    // Collect system metrics
-    const systemMetrics = await this.getSystemMetrics(timestamp);
-    this.systemMetrics.push(systemMetrics);
+      // Collect system metrics
+      const systemMetrics = await this.getSystemMetrics(timestamp);
+      this.systemMetrics.push(systemMetrics);
 
-    // Collect application metrics
-    const appMetrics = await this.getApplicationMetrics(timestamp);
-    this.appMetrics.push(appMetrics);
+      // Collect application metrics
+      const appMetrics = await this.getApplicationMetrics(timestamp);
+      this.appMetrics.push(appMetrics);
 
-    // Check for alerts
-    await this.checkAlerts(systemMetrics, appMetrics);
+      // Check for alerts (with error handling)
+      await this.checkAlerts(systemMetrics, appMetrics);
 
-    // Cleanup old metrics (keep last 24 hours)
-    const cutoff = timestamp - (24 * 60 * 60 * 1000);
-    this.systemMetrics = this.systemMetrics.filter(m => m.timestamp > cutoff);
-    this.appMetrics = this.appMetrics.filter(m => m.timestamp > cutoff);
-    this.alerts = this.alerts.filter(a => a.timestamp > cutoff);
+      // Cleanup old metrics (keep last 24 hours)
+      const cutoff = timestamp - (24 * 60 * 60 * 1000);
+      this.systemMetrics = this.systemMetrics.filter(m => m.timestamp > cutoff);
+      this.appMetrics = this.appMetrics.filter(m => m.timestamp > cutoff);
+      this.alerts = this.alerts.filter(a => a.timestamp > cutoff);
 
-    this.emit('metrics', { systemMetrics, appMetrics });
+      this.emit('metrics', { systemMetrics, appMetrics });
+    } catch (error) {
+      logger.error('Error collecting metrics:', error);
+    }
   }
 
   private async getSystemMetrics(timestamp: number): Promise<SystemMetrics> {
@@ -299,7 +303,8 @@ class MonitoringService extends EventEmitter {
     systemMetrics: SystemMetrics, 
     appMetrics: ApplicationMetrics
   ): Promise<void> {
-    const alerts: PerformanceAlert[] = [];
+    try {
+      const alerts: PerformanceAlert[] = [];
 
     // CPU usage alert
     if (systemMetrics.cpu && systemMetrics.cpu.usage != null && systemMetrics.cpu.usage > this.thresholds.cpu) {
@@ -338,7 +343,7 @@ class MonitoringService extends EventEmitter {
     }
 
     // Response time alert
-    if (appMetrics.requests.avgResponseTime > this.thresholds.responseTime) {
+    if (appMetrics.requests && appMetrics.requests.avgResponseTime != null && appMetrics.requests.avgResponseTime > this.thresholds.responseTime) {
       alerts.push({
         type: 'response_time',
         severity: appMetrics.requests.avgResponseTime > 10000 ? 'critical' : 'medium',
@@ -350,7 +355,7 @@ class MonitoringService extends EventEmitter {
     }
 
     // Error rate alert
-    const errorRate = appMetrics.requests.total > 0 ? 
+    const errorRate = appMetrics.requests && appMetrics.requests.total > 0 ? 
       (appMetrics.requests.errors / appMetrics.requests.total) * 100 : 0;
     
     if (errorRate > this.thresholds.errorRate) {
@@ -364,18 +369,21 @@ class MonitoringService extends EventEmitter {
       });
     }
 
-    // Process new alerts
-    for (const alert of alerts) {
-      this.alerts.push(alert);
-      this.emit('alert', alert);
-      
-      logger.warn('Performance alert', {
-        type: alert.type,
-        severity: alert.severity,
-        message: alert.message,
-        value: alert.value,
-        threshold: alert.threshold
-      });
+      // Process new alerts
+      for (const alert of alerts) {
+        this.alerts.push(alert);
+        this.emit('alert', alert);
+        
+        logger.warn('Performance alert', {
+          type: alert.type,
+          severity: alert.severity,
+          message: alert.message,
+          value: alert.value,
+          threshold: alert.threshold
+        });
+      }
+    } catch (error) {
+      logger.error('Error checking alerts:', error);
     }
   }
 

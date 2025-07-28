@@ -245,13 +245,17 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
           <button
             onClick={() => chartRef.current?.chart.timeScale().fitContent()}
             className="px-3 py-1 text-xs bg-dark-700 hover:bg-dark-600 text-gray-300 rounded transition-colors"
+            aria-label="Fit chart to content"
           >
             Fit
           </button>
+          <label htmlFor="symbol-select" className="sr-only">Select trading symbol</label>
           <select 
+            id="symbol-select"
             className="px-2 py-1 text-xs bg-dark-700 text-gray-300 rounded border border-dark-600"
             onChange={(e) => onSymbolChange?.(e.target.value)}
             value={symbol}
+            aria-label="Trading symbol selector"
           >
             <option value="EURUSD">EUR/USD</option>
             <option value="GBPUSD">GBP/USD</option>
@@ -269,6 +273,8 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({
         ref={chartContainerRef}
         className="w-full bg-dark-800 rounded-b-lg"
         style={{ height }}
+        role="img"
+        aria-label={`Trading chart for ${symbol} showing candlestick and volume data`}
       />
     </div>
   );

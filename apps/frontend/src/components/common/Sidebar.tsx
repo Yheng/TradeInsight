@@ -11,25 +11,27 @@ import {
   Users,
   LineChart
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/stores/authStore'
 import { clsx } from 'clsx'
 
-const getNavigation = (userRole?: string) => {
+const getNavigation = (userRole?: string, t?: any) => {
   const baseNavigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'Trading', href: '/trading', icon: TrendingUp },
-    { name: 'Charts', href: '/charts', icon: LineChart },
-    { name: 'Analytics', href: '/analytics', icon: BarChart3 },
-    { name: 'Alerts', href: '/alerts', icon: Bell },
-    { name: 'Social', href: '/social', icon: Users },
-    { name: 'Profile', href: '/profile', icon: User },
+    { name: t?.('navigation.dashboard') || 'Dashboard', href: '/dashboard', icon: LayoutDashboard, key: 'dashboard' },
+    { name: t?.('navigation.trading') || 'Trading', href: '/trading', icon: TrendingUp, key: 'trading' },
+    { name: t?.('navigation.charts') || 'Charts', href: '/charts', icon: LineChart, key: 'charts' },
+    { name: t?.('navigation.analytics') || 'Analytics', href: '/analytics', icon: BarChart3, key: 'analytics' },
+    { name: t?.('navigation.alerts') || 'Alerts', href: '/alerts', icon: Bell, key: 'alerts' },
+    { name: t?.('navigation.social') || 'Social', href: '/social', icon: Users, key: 'social' },
+    { name: t?.('navigation.profile') || 'Profile', href: '/profile', icon: User, key: 'profile' },
   ];
 
   if (userRole === 'admin') {
     baseNavigation.push({
-      name: 'Admin', 
+      name: t?.('navigation.admin') || 'Admin', 
       href: '/admin', 
-      icon: Shield 
+      icon: Shield,
+      key: 'admin'
     });
   }
 
@@ -39,21 +41,22 @@ const getNavigation = (userRole?: string) => {
 const Sidebar = () => {
   const location = useLocation()
   const { logout, user } = useAuthStore()
-  const navigation = getNavigation(user?.role)
+  const { t } = useTranslation()
+  const navigation = getNavigation(user?.role, t)
 
   return (
     <div className="hidden md:flex md:w-64 md:flex-col">
       <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-gray-800 border-r border-gray-700">
         {/* Logo */}
         <div className="flex items-center flex-shrink-0 px-4">
-          <Activity className="w-8 h-8 text-blue-400" />
+          <Activity className="w-8 h-8 text-blue-400" aria-hidden="true" />
           <span className="ml-2 text-xl font-bold text-white">TradeInsight</span>
         </div>
         
         {/* Navigation */}
-        <nav className="mt-8 flex-grow flex flex-col">
+        <nav className="mt-8 flex-grow flex flex-col" aria-label="Main navigation">
           <div className="px-3">
-            <ul className="space-y-1">
+            <ul className="space-y-1" role="list">
               {navigation.map((item) => {
                 const isActive = location.pathname === item.href
                 return (
@@ -66,6 +69,7 @@ const Sidebar = () => {
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                       )}
+                      aria-current={isActive ? 'page' : undefined}
                     >
                       <item.icon
                         className={clsx(
@@ -89,7 +93,11 @@ const Sidebar = () => {
         <div className="flex-shrink-0 p-4 border-t border-gray-700">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <div 
+                className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center"
+                role="img"
+                aria-label={`User avatar for ${user?.email || 'user'}`}
+              >
                 <span className="text-sm font-medium text-white">
                   {user?.email?.[0]?.toUpperCase() || 'U'}
                 </span>
@@ -104,9 +112,10 @@ const Sidebar = () => {
             <button
               onClick={logout}
               className="ml-3 text-gray-400 hover:text-gray-300 p-1 rounded-md hover:bg-gray-700"
-              title="Logout"
+              aria-label={t('navigation.logout')}
+              title={t('navigation.logout')}
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </div>

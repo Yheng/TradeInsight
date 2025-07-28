@@ -1,0 +1,139 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "close": "Cerrar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "trading": "Trading",
+    "charts": "Gráficos",
+    "analytics": "Análisis",
+    "alerts": "Alertas",
+    "social": "Social",
+    "profile": "Perfil",
+    "admin": "Admin",
+    "logout": "Cerrar Sesión"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "loginSuccess": "¡Inicio de sesión exitoso!",
+    "loginError": "Credenciales inválidas",
+    "registerSuccess": "¡Registro exitoso!",
+    "registerError": "Registro fallido"
+  },
+  "dashboard": {
+    "title": "Panel de Trading",
+    "tradingStats": "Estadísticas de Trading",
+    "totalTrades": "Operaciones Totales",
+    "winRate": "Tasa de Acierto",
+    "totalProfit": "Ganancia Total",
+    "riskScore": "Puntuación de Riesgo",
+    "recentTrades": "Operaciones Recientes",
+    "performanceChart": "Gráfico de Rendimiento"
+  },
+  "trading": {
+    "symbol": "Símbolo",
+    "type": "Tipo",
+    "volume": "Volumen",
+    "openPrice": "Precio de Apertura",
+    "currentPrice": "Precio Actual",
+    "profit": "Ganancia",
+    "status": "Estado",
+    "openTime": "Hora de Apertura",
+    "buy": "Comprar",
+    "sell": "Vender"
+  },
+  "alerts": {
+    "title": "Alertas de Trading",
+    "riskAlert": "Alerta de Riesgo",
+    "drawdownWarning": "Advertencia de Drawdown",
+    "leverageWarning": "Advertencia de Apalancamiento",
+    "volatilitySpike": "Pico de Volatilidad",
+    "noAlerts": "Sin alertas aún",
+    "alertsDescription": "Verás alertas de trading en tiempo real aquí",
+    "connect": "Conectar a Alertas",
+    "disconnect": "Desconectar",
+    "test": "Prueba",
+    "connected": "Conectado",
+    "connecting": "Conectando...",
+    "disconnected": "Desconectado",
+    "connectionError": "Error de Conexión"
+  },
+  "onboarding": {
+    "title": "Bienvenido a TradeInsight",
+    "step1": {
+      "title": "Conectar MT5",
+      "description": "Vincula tu cuenta de MetaTrader 5",
+      "accountId": "ID de Cuenta",
+      "password": "Contraseña",
+      "server": "Servidor",
+      "connect": "Conectar",
+      "instructions": "Conecta tu cuenta de MetaTrader 5 para comenzar a analizar tus datos de trading. Puedes obtener estas credenciales desde el portal del cliente de tu broker."
+    },
+    "step2": {
+      "title": "Perfil de Riesgo",
+      "description": "Configura tus preferencias de trading",
+      "maxLeverage": "Apalancamiento Máximo",
+      "riskTolerance": "Tolerancia al Riesgo",
+      "conservative": "Conservador",
+      "moderate": "Moderado",
+      "aggressive": "Agresivo",
+      "maxDrawdown": "Drawdown Máximo (%)",
+      "saveProfile": "Guardar Perfil de Riesgo",
+      "instructions": "Configura tus preferencias de riesgo para obtener recomendaciones y alertas personalizadas de trading."
+    },
+    "step3": {
+      "title": "Configuración de Alertas",
+      "description": "Configura las notificaciones",
+      "emailNotifications": "Notificaciones por Email",
+      "riskAlerts": "Alertas de Riesgo",
+      "drawdownWarnings": "Advertencias de Drawdown",
+      "instructions": "Configura cuándo y cómo quieres recibir alertas y notificaciones de trading."
+    },
+    "completeSetup": "Completar Configuración",
+    "feedback": {
+      "title": "Califica este paso",
+      "rating": "Calificación (1-5 estrellas)",
+      "comment": "Comentarios (opcional)",
+      "placeholder": "Cuéntanos sobre tu experiencia...",
+      "submitFeedback": "Enviar Comentarios",
+      "skip": "Omitir"
+    }
+  },
+  "social": {
+    "title": "Trading Social",
+    "community": "Comunidad",
+    "leaderboard": "Tabla de Clasificación",
+    "insights": "Insights del Mercado",
+    "topTraders": "Mejores Traders",
+    "marketSentiment": "Sentimiento del Mercado",
+    "discussions": "Discusiones"
+  },
+  "admin": {
+    "title": "Panel de Administración",
+    "userManagement": "Gestión de Usuarios",
+    "systemMetrics": "Métricas del Sistema",
+    "totalUsers": "Usuarios Totales",
+    "activeUsers": "Usuarios Activos",
+    "systemHealth": "Salud del Sistema",
+    "backups": "Respaldos de Base de Datos"
+  }
+}

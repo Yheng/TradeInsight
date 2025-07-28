@@ -60,21 +60,27 @@ const AlertStatus = () => {
       <button
         onClick={() => setShowDetails(!showDetails)}
         className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:border-gray-600 transition-colors"
+        aria-label={`Alert system status: ${getStatusText()}. ${alerts.length} alerts.`}
+        aria-expanded={showDetails}
+        aria-haspopup="true"
       >
         {isConnected ? (
-          <Bell className="w-4 h-4 text-blue-400" />
+          <Bell className="w-4 h-4 text-blue-400" aria-hidden="true" />
         ) : (
-          <BellOff className="w-4 h-4 text-gray-400" />
+          <BellOff className="w-4 h-4 text-gray-400" aria-hidden="true" />
         )}
         
-        {getStatusIcon()}
+        <span aria-hidden="true">{getStatusIcon()}</span>
         
         <span className={`text-sm font-medium ${getStatusColor()}`}>
           {getStatusText()}
         </span>
         
         {alerts.length > 0 && (
-          <span className="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          <span 
+            className="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+            aria-label={`${alerts.length} unread alerts`}
+          >
             {alerts.length > 99 ? '99+' : alerts.length}
           </span>
         )}
@@ -108,6 +114,7 @@ const AlertStatus = () => {
                     onClick={subscribe}
                     disabled={connectionStatus === 'connecting'}
                     className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white text-sm py-2 px-3 rounded-md transition-colors"
+                    aria-label="Connect to real-time alerts"
                   >
                     Connect to Alerts
                   </button>
@@ -115,6 +122,7 @@ const AlertStatus = () => {
                   <button
                     onClick={unsubscribe}
                     className="flex-1 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-3 rounded-md transition-colors"
+                    aria-label="Disconnect from alerts"
                   >
                     Disconnect
                   </button>
@@ -124,8 +132,9 @@ const AlertStatus = () => {
                   onClick={testAlert}
                   disabled={!isConnected}
                   className="flex items-center space-x-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 text-white text-sm py-2 px-3 rounded-md transition-colors"
+                  aria-label="Send test alert"
                 >
-                  <TestTube className="w-4 h-4" />
+                  <TestTube className="w-4 h-4" aria-hidden="true" />
                   <span>Test</span>
                 </button>
               </div>
@@ -137,7 +146,11 @@ const AlertStatus = () => {
                 </h4>
                 
                 {recentAlerts.length > 0 ? (
-                  <div className="space-y-2 max-h-40 overflow-y-auto">
+                  <div 
+                    className="space-y-2 max-h-40 overflow-y-auto"
+                    role="list"
+                    aria-label="Recent trading alerts"
+                  >
                     {recentAlerts.map((alert) => (
                       <div
                         key={alert.id}
@@ -148,6 +161,8 @@ const AlertStatus = () => {
                             ? 'bg-yellow-900 bg-opacity-20 border-yellow-500'
                             : 'bg-blue-900 bg-opacity-20 border-blue-500'
                         }`}
+                        role="listitem"
+                        aria-label={`${alert.priority} priority alert for ${alert.symbol || 'trading'}: ${alert.message}`}
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -158,7 +173,9 @@ const AlertStatus = () => {
                             )}
                             <p className="text-white text-sm mt-1">{alert.message}</p>
                             <p className="text-gray-400 text-xs mt-1">
-                              {new Date(alert.timestamp).toLocaleTimeString()}
+                              <time dateTime={alert.timestamp}>
+                                {new Date(alert.timestamp).toLocaleTimeString()}
+                              </time>
                             </p>
                           </div>
                           <span
@@ -169,6 +186,7 @@ const AlertStatus = () => {
                                 ? 'bg-yellow-600 text-white'
                                 : 'bg-blue-600 text-white'
                             }`}
+                            aria-label={`Priority: ${alert.priority}`}
                           >
                             {alert.priority}
                           </span>
@@ -178,7 +196,7 @@ const AlertStatus = () => {
                   </div>
                 ) : (
                   <div className="text-center py-4">
-                    <Bell className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+                    <Bell className="w-8 h-8 text-gray-600 mx-auto mb-2" aria-hidden="true" />
                     <p className="text-gray-400 text-sm">No alerts yet</p>
                     <p className="text-gray-500 text-xs">
                       You'll see real-time trading alerts here

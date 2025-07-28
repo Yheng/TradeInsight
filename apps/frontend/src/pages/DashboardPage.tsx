@@ -39,8 +39,8 @@ const DashboardPage = () => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-700 mb-2">Please Log In</h2>
-          <p className="text-gray-500">You need to be logged in to view the dashboard.</p>
+          <h2 className="text-xl font-semibold text-primary-contrast mb-2">Please Log In</h2>
+          <p className="text-tertiary-contrast">You need to be logged in to view the dashboard.</p>
         </div>
       </div>
     )
@@ -93,8 +93,8 @@ const DashboardPage = () => {
                   <BarChart3 className="h-8 w-8 text-primary-400" />
                 </div>
                 <div>
-                  <h1 className="text-4xl font-bold text-gray-100 tracking-tight">Trading Dashboard</h1>
-                  <p className="text-gray-400 text-lg">Welcome back! Monitor your portfolio in real-time</p>
+                  <h1 className="text-4xl font-bold text-primary-contrast tracking-tight">Trading Dashboard</h1>
+                  <p className="text-tertiary-contrast text-lg">Welcome back! Monitor your portfolio in real-time</p>
                 </div>
               </div>
             </div>

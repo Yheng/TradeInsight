@@ -59,4 +59,6 @@ coverage/
 
 # docs
 docs/
-*.markdown
+prd.markdown
+TradeInsight_Summary.markdown
+ui-ux-spec.markdown

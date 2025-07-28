@@ -2,6 +2,7 @@ import { pipeline } from '@xenova/transformers';
 import { DatabaseService } from '../database/DatabaseService';
 import { logger } from '@tradeinsight/utils';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 export interface TradeAnalysisInput {
   userId: string;
@@ -35,6 +36,8 @@ export interface RuleBasedAnalysis {
 export class AIAnalysisService {
   private static classifier: any = null;
   private static initialized = false;
+  private static openaiApiKey = process.env.OPENAI_API_KEY;
+  private static useOpenAI = !!process.env.OPENAI_API_KEY;
 
   static async initialize(): Promise<void> {
     if (this.initialized) return;
@@ -42,12 +45,18 @@ export class AIAnalysisService {
     try {
       logger.info('Initializing AI analysis service...');
       
-      // Initialize the text classification pipeline
-      this.classifier = await pipeline('text-classification', 'distilbert-base-uncased', {
-        revision: 'main',
-      });
+      if (this.useOpenAI) {
+        logger.info('Using OpenAI API for AI analysis');
+        this.initialized = true;
+      } else {
+        logger.info('Using Transformers.js for AI analysis');
+        // Initialize the text classification pipeline
+        this.classifier = await pipeline('text-classification', 'distilbert-base-uncased', {
+          revision: 'main',
+        });
+        this.initialized = true;
+      }
       
-      this.initialized = true;
       logger.info('AI analysis service initialized successfully');
     } catch (error) {
       logger.error('Failed to initialize AI analysis service:', error);
@@ -72,8 +81,12 @@ export class AIAnalysisService {
 
       // Get ML-based recommendations if available
       let mlRecommendations: AIRecommendation[] = [];
-      if (this.classifier && trades.length > 0) {
-        mlRecommendations = await this.getMLRecommendations(trades, riskProfile);
+      if (trades.length > 0) {
+        if (this.useOpenAI) {
+          mlRecommendations = await this.getOpenAIRecommendations(trades, riskProfile);
+        } else if (this.classifier) {
+          mlRecommendations = await this.getMLRecommendations(trades, riskProfile);
+        }
       }
 
       // Store analysis results
@@ -188,6 +201,87 @@ export class AIAnalysisService {
       .slice(0, 3);
   }
 
+  private static async getOpenAIRecommendations(
+    trades: any[], 
+    riskProfile?: any
+  ): Promise<AIRecommendation[]> {
+    if (!this.openaiApiKey || trades.length === 0) {
+      return [];
+    }
+
+    try {
+      const recommendations: AIRecommendation[] = [];
+      const symbols = [...new Set(trades.map(t => t.symbol))];
+
+      for (const symbol of symbols.slice(0, 3)) { // Limit to 3 symbols
+        const symbolTrades = trades.filter(t => t.symbol === symbol);
+        
+        // Create trading context for OpenAI analysis
+        const tradingContext = this.createDetailedTradingContext(symbolTrades, symbol, riskProfile);
+        
+        const prompt = `Analyze the following trading data and provide a specific recommendation:
+
+${tradingContext}
+
+Please provide:
+1. A specific trading recommendation for ${symbol}
+2. Your confidence level (0-1)
+3. Risk assessment (low/medium/high)
+4. Brief reasoning (max 100 words)
+
+Format your response as JSON with keys: recommendation, confidence, riskLevel, reasoning`;
+
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+          model: 'gpt-4o-mini',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a professional trading analyst providing actionable trading recommendations based on historical data.'
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 300,
+          temperature: 0.3
+        }, {
+          headers: {
+            'Authorization': `Bearer ${this.openaiApiKey}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.data?.choices?.[0]?.message?.content) {
+          try {
+            const aiResponse = JSON.parse(response.data.choices[0].message.content);
+            
+            // Only include high-confidence predictions
+            if (aiResponse.confidence > 0.7) {
+              recommendations.push({
+                id: uuidv4(),
+                symbol,
+                recommendation: aiResponse.recommendation,
+                confidence: aiResponse.confidence,
+                reasoning: aiResponse.reasoning,
+                riskLevel: aiResponse.riskLevel,
+                timeframe: '1H',
+              });
+            }
+          } catch (parseError) {
+            logger.warn(`Failed to parse OpenAI response for ${symbol}:`, parseError);
+          }
+        }
+      }
+
+      return recommendations;
+
+    } catch (error) {
+      logger.error('Error in OpenAI recommendation generation:', error);
+      return [];
+    }
+  }
+
   private static async getMLRecommendations(
     trades: any[], 
     riskProfile?: any
@@ -243,6 +337,36 @@ export class AIAnalysisService {
     const avgVolume = trades.reduce((sum, t) => sum + t.volume, 0) / totalTrades;
     
     return `Trading analysis for ${symbol}: ${totalTrades} trades executed with ${winRate.toFixed(1)}% win rate. Total profit: ${totalProfit.toFixed(2)}. Average volume: ${avgVolume.toFixed(2)} lots. Risk tolerance: ${riskProfile?.riskTolerance || 'medium'}.`;
+  }
+
+  private static createDetailedTradingContext(trades: any[], symbol: string, riskProfile?: any): string {
+    const profitableTrades = trades.filter(t => t.profit > 0);
+    const losingTrades = trades.filter(t => t.profit < 0);
+    const totalTrades = trades.length;
+    const winRate = (profitableTrades.length / totalTrades) * 100;
+    const totalProfit = trades.reduce((sum, t) => sum + t.profit, 0);
+    const avgVolume = trades.reduce((sum, t) => sum + t.volume, 0) / totalTrades;
+    const maxDrawdown = this.calculateMaxDrawdown(trades);
+    
+    const avgWin = profitableTrades.length > 0 
+      ? profitableTrades.reduce((sum, t) => sum + t.profit, 0) / profitableTrades.length 
+      : 0;
+    const avgLoss = losingTrades.length > 0 
+      ? Math.abs(losingTrades.reduce((sum, t) => sum + t.profit, 0) / losingTrades.length)
+      : 0;
+    
+    const profitFactor = avgLoss > 0 ? avgWin / avgLoss : 0;
+    
+    return `Symbol: ${symbol}
+Total Trades: ${totalTrades}
+Win Rate: ${winRate.toFixed(1)}%
+Total P&L: ${totalProfit.toFixed(2)}
+Average Volume: ${avgVolume.toFixed(2)} lots
+Max Drawdown: ${maxDrawdown.toFixed(1)}%
+Average Win: ${avgWin.toFixed(2)}
+Average Loss: ${avgLoss.toFixed(2)}
+Profit Factor: ${profitFactor.toFixed(2)}
+Risk Profile: Max Leverage ${riskProfile?.maxLeverage || 100}x, Risk Tolerance: ${riskProfile?.riskTolerance || 'medium'}, Max Drawdown Limit: ${riskProfile?.maxDrawdown || 10}%`;
   }
 
   private static generateRecommendationText(label: string, symbol: string, trades: any[]): string {

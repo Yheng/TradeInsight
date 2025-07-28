@@ -188,6 +188,17 @@ export class DatabaseService {
         user_id TEXT,
         error TEXT NOT NULL,
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`,
+      
+      `CREATE TABLE IF NOT EXISTS onboarding_logs (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        step TEXT NOT NULL,
+        completion_time INTEGER,
+        dropoff_step TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        completed_at DATETIME,
+        FOREIGN KEY (user_id) REFERENCES users (id)
       )`
     ];
 
@@ -209,7 +220,9 @@ export class DatabaseService {
       'CREATE INDEX IF NOT EXISTS idx_social_metrics_user_id ON social_metrics (user_id)',
       'CREATE INDEX IF NOT EXISTS idx_feedback_user_id ON feedback (user_id)',
       'CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs (user_id)',
-      'CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs (timestamp)'
+      'CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs (timestamp)',
+      'CREATE INDEX IF NOT EXISTS idx_onboarding_logs_user_id ON onboarding_logs (user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_onboarding_logs_step ON onboarding_logs (step)'
     ];
 
     for (const index of indexes) {

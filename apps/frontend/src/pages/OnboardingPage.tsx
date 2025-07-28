@@ -22,6 +22,7 @@ const OnboardingPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedbackData, setFeedbackData] = useState<FeedbackFormData>({ rating: 0, comment: '' });
+  const [startTime] = useState(Date.now());
 
   // MT5 Connection Form Data
   const [mt5Credentials, setMt5Credentials] = useState({
@@ -45,14 +46,27 @@ const OnboardingPage = () => {
 
     setIsLoading(true);
     try {
-      // TODO: Implement MT5 connection API call
-      // const response = await apiService.connectMT5(mt5Credentials);
-      // if (response.success) {
+      const token = localStorage.getItem('token');
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/mt5/connect`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(mt5Credentials)
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         toast.success('Connected to MT5 successfully!');
         setShowFeedback(true);
-      // } else {
-      //   toast.error(response.error || 'Failed to connect to MT5');
-      // }
+      } else {
+        toast.error(result.error || 'Failed to connect to MT5');
+      }
     } catch (error) {
       toast.error('Connection failed. Please try again.');
     } finally {
@@ -62,12 +76,25 @@ const OnboardingPage = () => {
 
   const handleFeedbackSubmit = async () => {
     try {
-      // TODO: Implement feedback submission API call
-      // await apiService.submitFeedback({
-      //   step: `step_${currentStep}`,
-      //   rating: feedbackData.rating,
-      //   comment: feedbackData.comment
-      // });
+      if (feedbackData.rating > 0) {
+        const token = localStorage.getItem('token');
+        await fetch(
+          `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/social/feedback`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              type: `onboarding_step_${currentStep}`,
+              category: 'onboarding',
+              rating: feedbackData.rating,
+              message: feedbackData.comment || 'No comment provided'
+            })
+          }
+        );
+      }
       
       setShowFeedback(false);
       setFeedbackData({ rating: 0, comment: '' });
@@ -75,6 +102,8 @@ const OnboardingPage = () => {
       if (currentStep < 3) {
         setCurrentStep(currentStep + 1);
       } else {
+        // Complete onboarding
+        await completeOnboarding();
         navigate('/dashboard');
       }
     } catch (error) {
@@ -82,13 +111,42 @@ const OnboardingPage = () => {
     }
   };
 
-  const handleSkipFeedback = () => {
+  const completeOnboarding = async () => {
+    try {
+      const totalTime = Math.floor((Date.now() - startTime) / 1000);
+      const token = localStorage.getItem('token');
+      
+      await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/onboarding/complete`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            totalTime,
+            steps: [
+              { step: 'mt5_connection', completionTime: 60 },
+              { step: 'risk_profile', completionTime: 45 },
+              { step: 'alerts_setup', completionTime: 30 }
+            ]
+          })
+        }
+      );
+    } catch (error) {
+      console.error('Failed to log onboarding completion:', error);
+    }
+  };
+
+  const handleSkipFeedback = async () => {
     setShowFeedback(false);
     setFeedbackData({ rating: 0, comment: '' });
     
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
+      await completeOnboarding();
       navigate('/dashboard');
     }
   };
@@ -173,6 +231,35 @@ const OnboardingPage = () => {
     </div>
   );
 
+  const handleSaveRiskProfile = async () => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/ai/risk-profile`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(riskProfile)
+        }
+      );
+
+      if (response.ok) {
+        toast.success('Risk profile saved successfully!');
+        setShowFeedback(true);
+      } else {
+        toast.error('Failed to save risk profile');
+      }
+    } catch (error) {
+      toast.error('Failed to save risk profile');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const RiskProfileStep = () => (
     <div className="max-w-md mx-auto">
       <div className="text-white text-center mb-6">
@@ -181,7 +268,7 @@ const OnboardingPage = () => {
         </p>
       </div>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleSaveRiskProfile(); }}>
         <div>
           <label htmlFor="maxLeverage" className="block text-sm font-medium text-white mb-1">
             Maximum Leverage (1x - 500x)
@@ -228,6 +315,14 @@ const OnboardingPage = () => {
             className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-blue-600 focus:border-transparent"
           />
         </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition-colors"
+        >
+          {isLoading ? <LoadingSpinner size="sm" /> : 'Save Risk Profile'}
+        </button>
       </form>
     </div>
   );

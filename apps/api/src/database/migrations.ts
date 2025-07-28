@@ -206,7 +206,7 @@ export class DatabaseMigrations {
     const tables = [
       'migrations', 'users', 'trades', 'market_data', 'alerts', 'ai_analyses',
       'risk_metrics', 'user_mt5_credentials', 'user_risk_profiles', 
-      'social_metrics', 'feedback', 'audit_logs', 'fetch_errors'
+      'social_metrics', 'feedback', 'audit_logs', 'fetch_errors', 'onboarding_logs'
     ];
 
     for (const table of tables) {

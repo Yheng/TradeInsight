@@ -27,6 +27,8 @@ import adminRoutes from './routes/admin';
 import socialRoutes from './routes/social';
 import backupRoutes from './routes/backup';
 import monitoringRoutes from './routes/monitoring';
+import onboardingRoutes from './routes/onboarding';
+import brokerRoutes from './routes/broker';
 
 dotenv.config();
 
@@ -110,6 +112,8 @@ app.use('/api/admin', authMiddleware, adminRoutes);
 app.use('/api/social', authMiddleware, socialRoutes);
 app.use('/api/backup', authMiddleware, backupRoutes);
 app.use('/api/monitoring', authMiddleware, monitoringRoutes);
+app.use('/api/onboarding', authMiddleware, onboardingRoutes);
+app.use('/api/broker', authMiddleware, brokerRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

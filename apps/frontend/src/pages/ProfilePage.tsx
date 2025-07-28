@@ -23,13 +23,13 @@ const ProfilePage = () => {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
-        return 'bg-red-100 text-red-800'
+        return 'bg-bearish-500 text-white'
       case 'premium':
-        return 'bg-purple-100 text-purple-800'
+        return 'bg-warning-500 text-white'
       case 'user':
-        return 'bg-blue-100 text-blue-800'
+        return 'bg-primary-500 text-white'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-dark-600 text-trading-text'
     }
   }
 
@@ -47,8 +47,8 @@ const ProfilePage = () => {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
-        <p className="text-gray-600">Manage your account settings and preferences</p>
+        <h1 className="text-2xl font-bold text-primary-contrast">Profile</h1>
+        <p className="text-secondary-contrast">Manage your account settings and preferences</p>
       </div>
 
       {/* Profile Information */}
@@ -63,10 +63,10 @@ const ProfilePage = () => {
                   {profile?.last_name?.[0] || profile?.lastName?.[0]}
                 </span>
               </div>
-              <h3 className="text-lg font-medium text-gray-900">
+              <h3 className="text-lg font-medium text-primary-contrast">
                 {profile?.first_name || profile?.firstName} {profile?.last_name || profile?.lastName}
               </h3>
-              <p className="text-sm text-gray-500">@{profile?.username}</p>
+              <p className="text-sm text-tertiary-contrast">@{profile?.username}</p>
               <div className="mt-3">
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-medium ${getRoleBadgeColor(
@@ -90,23 +90,23 @@ const ProfilePage = () => {
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium form-label mb-1">
                       First Name
                     </label>
                     <div className="flex items-center">
-                      <User className="w-4 h-4 text-gray-400 mr-2" />
-                      <span className="text-sm text-gray-900">
+                      <User className="w-4 h-4 text-muted-contrast mr-2" />
+                      <span className="text-sm form-value">
                         {profile?.first_name || profile?.firstName}
                       </span>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium form-label mb-1">
                       Last Name
                     </label>
                     <div className="flex items-center">
-                      <User className="w-4 h-4 text-gray-400 mr-2" />
-                      <span className="text-sm text-gray-900">
+                      <User className="w-4 h-4 text-muted-contrast mr-2" />
+                      <span className="text-sm form-value">
                         {profile?.last_name || profile?.lastName}
                       </span>
                     </div>
@@ -114,12 +114,12 @@ const ProfilePage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium form-label mb-1">
                     Email Address
                   </label>
                   <div className="flex items-center">
-                    <Mail className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-sm text-gray-900">{profile?.email}</span>
+                    <Mail className="w-4 h-4 text-muted-contrast mr-2" />
+                    <span className="text-sm form-value">{profile?.email}</span>
                     {profile?.is_email_verified === false && (
                       <span className="ml-2 px-2 py-1 rounded-full text-xs font-medium bg-warning-100 text-warning-800">
                         Unverified
@@ -129,34 +129,34 @@ const ProfilePage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium form-label mb-1">
                     Username
                   </label>
                   <div className="flex items-center">
-                    <User className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-sm text-gray-900">@{profile?.username}</span>
+                    <User className="w-4 h-4 text-muted-contrast mr-2" />
+                    <span className="text-sm form-value">@{profile?.username}</span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium form-label mb-1">
                     Account Type
                   </label>
                   <div className="flex items-center">
-                    <Shield className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-sm text-gray-900 capitalize">
+                    <Shield className="w-4 h-4 text-muted-contrast mr-2" />
+                    <span className="text-sm form-value capitalize">
                       {profile?.role || 'user'} Account
                     </span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium form-label mb-1">
                     Member Since
                   </label>
                   <div className="flex items-center">
-                    <Calendar className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-sm text-gray-900">
+                    <Calendar className="w-4 h-4 text-muted-contrast mr-2" />
+                    <span className="text-sm form-value">
                       {profile?.created_at || profile?.createdAt
                         ? formatDate(profile.created_at || profile.createdAt)
                         : 'Unknown'}
@@ -176,34 +176,34 @@ const ProfilePage = () => {
         </div>
         <div className="card-content">
           <div className="space-y-4">
-            <div className="flex items-center justify-between py-3 border-b border-gray-200">
+            <div className="flex items-center justify-between py-3 border-b border-dark-600">
               <div>
-                <h4 className="text-sm font-medium text-gray-900">Email Notifications</h4>
-                <p className="text-sm text-gray-500">Receive email alerts for trades and market updates</p>
+                <h4 className="text-sm font-medium text-primary-contrast">Email Notifications</h4>
+                <p className="text-sm text-tertiary-contrast">Receive email alerts for trades and market updates</p>
               </div>
               <button className="btn-secondary">Configure</button>
             </div>
             
-            <div className="flex items-center justify-between py-3 border-b border-gray-200">
+            <div className="flex items-center justify-between py-3 border-b border-dark-600">
               <div>
-                <h4 className="text-sm font-medium text-gray-900">Two-Factor Authentication</h4>
-                <p className="text-sm text-gray-500">Add an extra layer of security to your account</p>
+                <h4 className="text-sm font-medium text-primary-contrast">Two-Factor Authentication</h4>
+                <p className="text-sm text-tertiary-contrast">Add an extra layer of security to your account</p>
               </div>
               <button className="btn-secondary">Enable</button>
             </div>
             
-            <div className="flex items-center justify-between py-3 border-b border-gray-200">
+            <div className="flex items-center justify-between py-3 border-b border-dark-600">
               <div>
-                <h4 className="text-sm font-medium text-gray-900">API Keys</h4>
-                <p className="text-sm text-gray-500">Manage API keys for external integrations</p>
+                <h4 className="text-sm font-medium text-primary-contrast">API Keys</h4>
+                <p className="text-sm text-tertiary-contrast">Manage API keys for external integrations</p>
               </div>
               <button className="btn-secondary">Manage</button>
             </div>
             
             <div className="flex items-center justify-between py-3">
               <div>
-                <h4 className="text-sm font-medium text-gray-900">Data Export</h4>
-                <p className="text-sm text-gray-500">Download your trading data and account information</p>
+                <h4 className="text-sm font-medium text-primary-contrast">Data Export</h4>
+                <p className="text-sm text-tertiary-contrast">Download your trading data and account information</p>
               </div>
               <button className="btn-secondary">Export</button>
             </div>
@@ -218,18 +218,18 @@ const ProfilePage = () => {
         </div>
         <div className="card-content">
           <div className="space-y-4">
-            <div className="flex items-center justify-between py-3 border-b border-red-200">
+            <div className="flex items-center justify-between py-3 border-b border-bearish-600">
               <div>
-                <h4 className="text-sm font-medium text-red-700">Change Password</h4>
-                <p className="text-sm text-gray-500">Update your account password</p>
+                <h4 className="text-sm font-medium text-bearish-400">Change Password</h4>
+                <p className="text-sm text-tertiary-contrast">Update your account password</p>
               </div>
               <button className="btn-secondary">Change Password</button>
             </div>
             
             <div className="flex items-center justify-between py-3">
               <div>
-                <h4 className="text-sm font-medium text-red-700">Delete Account</h4>
-                <p className="text-sm text-gray-500">
+                <h4 className="text-sm font-medium text-bearish-400">Delete Account</h4>
+                <p className="text-sm text-tertiary-contrast">
                   Permanently delete your account and all associated data
                 </p>
               </div>

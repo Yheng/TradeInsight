@@ -33,9 +33,9 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col">
+    <div className="min-h-screen bg-dark-900 flex flex-col">
       {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4">
+      <header className="bg-dark-800 border-b border-dark-700 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Activity className="w-8 h-8 text-blue-600" />
@@ -51,7 +51,7 @@ const LoginPage = () => {
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-sm">
           {/* Login Card */}
-          <div className="bg-gray-900 rounded-md shadow-lg p-8 border border-gray-700">
+          <div className="card p-8">
             <h2 className="text-white text-2xl font-semibold text-center mb-6">Login</h2>
             
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -62,7 +62,7 @@ const LoginPage = () => {
               )}
 
               <div>
-                <label htmlFor="emailOrUsername" className="block text-sm font-medium text-white mb-1">
+                <label htmlFor="emailOrUsername" className="block text-sm font-medium form-label mb-1">
                   Email
                 </label>
                 <input
@@ -76,7 +76,7 @@ const LoginPage = () => {
                   type="email"
                   id="emailOrUsername"
                   placeholder="user@example.com"
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="input"
                   aria-label="Email"
                 />
                 {errors.emailOrUsername && (
@@ -85,7 +85,7 @@ const LoginPage = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-white mb-1">
+                <label htmlFor="password" className="block text-sm font-medium form-label mb-1">
                   Password
                 </label>
                 <div className="relative">
@@ -99,7 +99,7 @@ const LoginPage = () => {
                     })}
                     type={showPassword ? 'text' : 'password'}
                     id="password"
-                    className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent pr-10"
+                    className="input pr-10"
                     aria-label="Password"
                   />
                   <button
@@ -129,7 +129,7 @@ const LoginPage = () => {
                   className="h-4 w-4 text-blue-600 focus:ring-blue-600 border-gray-300 rounded"
                   aria-label="Show Password"
                 />
-                <label htmlFor="showPassword" className="ml-2 block text-sm text-white">
+                <label htmlFor="showPassword" className="ml-2 block text-sm text-primary-contrast">
                   Show Password
                 </label>
               </div>
@@ -143,7 +143,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                className="btn-primary w-full"
               >
                 {isLoading ? 'Logging in...' : 'Login'}
               </button>
@@ -162,7 +162,7 @@ const LoginPage = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 border-t border-gray-700 px-6 py-4 text-center">
+      <footer className="bg-dark-800 border-t border-dark-700 px-6 py-4 text-center">
         <p className="text-gray-500 text-sm">Copyright © 2025</p>
       </footer>
     </div>

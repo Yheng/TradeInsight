@@ -1,0 +1,139 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "trading": "Trading",
+    "charts": "Charts",
+    "analytics": "Analytics",
+    "alerts": "Alerts",
+    "social": "Social",
+    "profile": "Profile",
+    "admin": "Admin",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "loginSuccess": "Login successful!",
+    "loginError": "Invalid credentials",
+    "registerSuccess": "Registration successful!",
+    "registerError": "Registration failed"
+  },
+  "dashboard": {
+    "title": "Trading Dashboard",
+    "tradingStats": "Trading Statistics",
+    "totalTrades": "Total Trades",
+    "winRate": "Win Rate",
+    "totalProfit": "Total Profit",
+    "riskScore": "Risk Score",
+    "recentTrades": "Recent Trades",
+    "performanceChart": "Performance Chart"
+  },
+  "trading": {
+    "symbol": "Symbol",
+    "type": "Type",
+    "volume": "Volume",
+    "openPrice": "Open Price",
+    "currentPrice": "Current Price",
+    "profit": "Profit",
+    "status": "Status",
+    "openTime": "Open Time",
+    "buy": "Buy",
+    "sell": "Sell"
+  },
+  "alerts": {
+    "title": "Trading Alerts",
+    "riskAlert": "Risk Alert",
+    "drawdownWarning": "Drawdown Warning",
+    "leverageWarning": "Leverage Warning",
+    "volatilitySpike": "Volatility Spike",
+    "noAlerts": "No alerts yet",
+    "alertsDescription": "You'll see real-time trading alerts here",
+    "connect": "Connect to Alerts",
+    "disconnect": "Disconnect",
+    "test": "Test",
+    "connected": "Connected",
+    "connecting": "Connecting...",
+    "disconnected": "Disconnected",
+    "connectionError": "Connection Error"
+  },
+  "onboarding": {
+    "title": "Welcome to TradeInsight",
+    "step1": {
+      "title": "Connect MT5",
+      "description": "Link your MetaTrader 5 account",
+      "accountId": "Account ID",
+      "password": "Password",
+      "server": "Server",
+      "connect": "Connect",
+      "instructions": "Connect your MetaTrader 5 account to start analyzing your trading data. You can get these credentials from your broker's client portal."
+    },
+    "step2": {
+      "title": "Risk Profile",
+      "description": "Set your trading preferences",
+      "maxLeverage": "Maximum Leverage",
+      "riskTolerance": "Risk Tolerance",
+      "conservative": "Conservative",
+      "moderate": "Moderate",
+      "aggressive": "Aggressive",
+      "maxDrawdown": "Maximum Drawdown (%)",
+      "saveProfile": "Save Risk Profile",
+      "instructions": "Set your risk preferences to get personalized trading recommendations and alerts."
+    },
+    "step3": {
+      "title": "Alerts Setup",
+      "description": "Configure notifications",
+      "emailNotifications": "Email Notifications",
+      "riskAlerts": "Risk Alerts",
+      "drawdownWarnings": "Drawdown Warnings",
+      "instructions": "Configure when and how you want to receive trading alerts and notifications."
+    },
+    "completeSetup": "Complete Setup",
+    "feedback": {
+      "title": "Rate this step",
+      "rating": "Rating (1-5 stars)",
+      "comment": "Feedback (optional)",
+      "placeholder": "Tell us about your experience...",
+      "submitFeedback": "Submit Feedback",
+      "skip": "Skip"
+    }
+  },
+  "social": {
+    "title": "Social Trading",
+    "community": "Community",
+    "leaderboard": "Leaderboard",
+    "insights": "Market Insights",
+    "topTraders": "Top Traders",
+    "marketSentiment": "Market Sentiment",
+    "discussions": "Discussions"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "userManagement": "User Management",
+    "systemMetrics": "System Metrics",
+    "totalUsers": "Total Users",
+    "activeUsers": "Active Users",
+    "systemHealth": "System Health",
+    "backups": "Database Backups"
+  }
+}
